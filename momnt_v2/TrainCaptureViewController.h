@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TrainSaveViewController.h"
+#import "TrainFaceViewController.h"
 
 @interface TrainCaptureViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate> {
     AVCaptureSession *_captureSession;
@@ -17,10 +18,21 @@
 @property (nonatomic, retain) AVCaptureSession *captureSession;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIImage *capturedImage;
-
+@property  (strong, nonatomic) NSMutableArray *imagesArray;
+@property  (strong, nonatomic) NSMutableArray *imagesArrayEdited;
+@property (strong, nonatomic) IBOutlet UIButton *ThreeDButton;
 @property (strong, nonatomic) IBOutlet UIButton *CalibrateButton;
+@property (strong, nonatomic) IBOutlet UIProgressView *progressView;
+@property (nonatomic, strong) NSTimer *calibrateTimer;
 
+- (IBAction)cap3dNow:(id)sender;
 - (IBAction)calibrateNow:(id)sender;
 - (void)initCapture;
+
+@property NSString *name;
+@property NSString *number;
+@property NSString *email;
+@property NSString *password;
+@property NSString *repassword;
 
 @end

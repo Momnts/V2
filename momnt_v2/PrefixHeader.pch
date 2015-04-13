@@ -23,7 +23,7 @@
 #import <CoreVideo/CoreVideo.h>
 #import <CoreMedia/CoreMedia.h>
 #import <MessageUI/MessageUI.h>
-//#import "AFNetworking.h"
+#import "AFNetworking.h"
 #import "KairosSDK.h"
 
 #endif

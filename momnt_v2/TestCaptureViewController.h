@@ -16,9 +16,15 @@
 }
 
 @property (nonatomic, retain) AVCaptureSession *captureSession;
+@property (strong, nonatomic) IBOutlet UIButton *ReverseCameraButton;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIImage *capturedImage;
 @property (strong, nonatomic) IBOutlet UIButton *CaptureButton;
+- (IBAction)logOff:(id)sender;
+- (IBAction)reverseCamera:(id)sender;
+
+@property NSString *path;
+@property NSString *camera_side;
 
 - (void)initCapture;
 - (IBAction)captureNow:(id)sender;

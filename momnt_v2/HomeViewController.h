@@ -7,11 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginViewController.h"
+#import "ServerCalls.h"
+#import "SignUpViewController.h"
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController <ServerCallsDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *CaptureButton;
 @property (strong, nonatomic) IBOutlet UIButton *CalibrateButton;
-- (IBAction)goToCalibrate:(id)sender;
-- (IBAction)goToCapture:(id)sender;
+@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (strong, nonatomic) IBOutlet UITextField *username;
+@property (strong, nonatomic) IBOutlet UITextField *password;
+- (IBAction)goToSignUp:(id)sender;
+
+@property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (strong, nonatomic) NSArray *pageTitles;
+@property (strong, nonatomic) NSArray *pageImages;
+@property NSString *email_str;
+@property NSString *password_str;
+@property NSString *path;
 
 @end

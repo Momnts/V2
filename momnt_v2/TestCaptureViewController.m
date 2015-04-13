@@ -17,14 +17,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.CaptureButton.layer.cornerRadius = 12;
-    self.CaptureButton.layer.borderWidth = 2;
+    self.CaptureButton.layer.cornerRadius = 30;
+    self.CaptureButton.layer.borderWidth = 5;
     self.CaptureButton.layer.borderColor = self.CaptureButton.currentTitleColor.CGColor;
-    //self.CaptureButton.layer.backgroundColor = [UIColor whiteColor].CGColor;
-    self.imageView = nil;
     
-    [self initCapture];
+    self.ReverseCameraButton.layer.cornerRadius = 30;
+    self.ReverseCameraButton.layer.borderWidth = 5;
+    self.ReverseCameraButton.layer.borderColor = [UIColor clearColor].CGColor;
+    UIImage *backgroundImage = [UIImage imageNamed:@"rotate_camera.png"];
+    [self.ReverseCameraButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+    self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
+    self.imageView = nil;
+    self.camera_side = @"back";
+    [self initCapture:self.camera_side];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,12 +40,138 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)initCapture {
+- (IBAction)logOff:(id)sender {
     
+    //Getting Path
+    
+    //Getting Plist directory
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    self.path = [documentsDirectory stringByAppendingPathComponent:@"currentUser.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath: self.path])
+    {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"currentUser" ofType:@"plist"];
+        
+        [fileManager copyItemAtPath:bundle toPath: self.path error:&error];
+    }
+    
+    //Updating Login Info
+    
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: self.path];
+    
+    //here add elements to data file and write data to file
+    int loggedIn= 0;
+    
+    [data setObject:[NSNumber numberWithInt:loggedIn] forKey:@"loggedIn"];
+    
+    [data writeToFile: self.path atomically:YES];
+    
+    [self performSegueWithIdentifier:@"backToLogin" sender:nil];
+
+}
+
+- (IBAction)reverseCamera:(id)sender {
+    
+    /*
+    
+    if([self.camera_side isEqualToString:@"front"])
+    {
+        self.camera_side = @"back";
+    }
+    else
+    {
+        self.camera_side = @"front";
+        //NSLog(@"changing camera to front");
+    }
+    
+    [self initCapture:self.camera_side];
+    */
+    
+    //Change camera source
+    if(_captureSession)
+    {
+        //Indicate that some changes will be made to the session
+        [_captureSession beginConfiguration];
+        
+        //Remove existing input
+        AVCaptureInput* currentCameraInput = [_captureSession.inputs objectAtIndex:0];
+        [_captureSession removeInput:currentCameraInput];
+        
+        //Get new input
+        AVCaptureDevice *newCamera = nil;
+        if(((AVCaptureDeviceInput*)currentCameraInput).device.position == AVCaptureDevicePositionBack)
+        {
+            newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
+        }
+        else
+        {
+            newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
+        }
+        
+        //Add input to session
+        NSError *err = nil;
+        AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:&err];
+        if(!newVideoInput || err)
+        {
+            NSLog(@"Error creating capture device input: %@", err.localizedDescription);
+        }
+        else
+        {
+            [_captureSession addInput:newVideoInput];
+        }
+        
+        //Commit all the configuration changes at once
+        [_captureSession commitConfiguration];
+    }
+}
+
+// Find a camera with the specified AVCaptureDevicePosition, returning nil if one is not found
+- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
+{
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices)
+    {
+        if ([device position] == position) return device;
+    }
+    return nil;
+}
+
+- (void)initCapture:(NSString*)camera_side {
+    
+    AVCaptureDeviceInput *captureInput;
+    
+    if([camera_side isEqualToString:@"back"])
+    {
     /*We setup the input*/
-    AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput
+        NSLog(@"changing camera to back");
+        captureInput = [AVCaptureDeviceInput
                                           deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo]
                                           error:nil];
+    }
+    else
+    {
+        NSLog(@"changing camera to front");
+        captureInput = [AVCaptureDeviceInput
+                        deviceInputWithDevice:[self frontFacingCameraIfAvailable]
+                        error:nil];
+    }
+    
+    //AVCaptureDevice *captureDevice = [self frontFacingCameraIfAvailable];
+    
+    /*
+    if([captureDevice isTorchModeSupported:AVCaptureTorchModeOn]) {
+        [captureDevice lockForConfiguration:nil];
+        //configure frame rate
+        [captureDevice setActiveVideoMaxFrameDuration:CMTimeMake(1, 1)];
+        [captureDevice setActiveVideoMinFrameDuration:CMTimeMake(1, 1)];
+        [captureDevice unlockForConfiguration];
+    }
+    */
+    
     /*We setupt the output*/
     AVCaptureVideoDataOutput *captureOutput = [[AVCaptureVideoDataOutput alloc] init];
     
@@ -67,6 +201,7 @@
     self.captureSession = [[AVCaptureSession alloc] init];
     
     /*We add input and output*/
+    
     [self.captureSession addInput:captureInput];
     [self.captureSession addOutput:captureOutput];
     
@@ -75,15 +210,37 @@
     
     /*We add the imageView*/
     self.imageView = [[UIImageView alloc] init];
-    self.imageView.frame = CGRectMake(0, 0, 300, 400);
-    [self.imageView setCenter:CGPointMake(self.view.bounds.size.width/2, (self.view.bounds.size.height/2))];                //setPosition:CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect))
+    self.imageView.frame = self.view.bounds; //CGRectMake(0, 0, 400, 600); //
+    //[self.imageView setCenter:CGPointMake(self.view.bounds.size.width/2, (self.view.bounds.size.height/2))];                //setPosition:CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect))
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:self.imageView];
+    [self.view sendSubviewToBack:self.imageView];
     
     /*We start the capture*/
     [self.captureSession startRunning];
     
 }
 
+-(AVCaptureDevice *)frontFacingCameraIfAvailable
+{
+    NSArray *videoDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice *captureDevice = nil;
+    for (AVCaptureDevice *device in videoDevices)
+    {
+        if (device.position == AVCaptureDevicePositionFront)
+        {
+            captureDevice = device;
+            break;
+        }
+    }
+    
+    if ( ! captureDevice)
+    {
+        captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    }
+    
+    return captureDevice;
+}
 
 #pragma mark -
 #pragma mark AVCaptureSession delegate

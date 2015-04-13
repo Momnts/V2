@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
+    /*
     // Add button
     self.view.backgroundColor = [UIColor whiteColor];
     self.RememberButton.layer.cornerRadius = 12;
@@ -38,7 +39,15 @@
     self.imageView = nil;
     
     [self loadImage];
-    [KairosSDK initWithAppId:@"1bf095ad" appKey:@"64b5e29cf8484c0d25d61467b4da7558"];
+     */
+    
+   [KairosSDK initWithAppId:@"1bf095ad" appKey:@"64b5e29cf8484c0d25d61467b4da7558"];
+    
+    ServerCalls *client = [[ServerCalls alloc] init];
+    client.delegate = self;
+    
+    [client train_image:[self.faceArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.number];
+    //[client train_image:[self.faceArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.number];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,12 +55,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"touchesBegan:withEvent:");
     [self.view endEditing:YES];
     [super touchesBegan:touches withEvent:event];
 }
-
+*/
+/*
 - (void) loadImage
 {
 
@@ -63,11 +74,9 @@
 }
 
 - (IBAction)rememberNow:(id)sender {
-    ServerCalls *client = [[ServerCalls alloc] init];
-    client.delegate = self;
     
-    [client train_image:self.capturedImage file_name:@"test.jpg" person_id:self.PersonIdentifier.text];
 }
+*/
 
 -(void)client:(ServerCalls *)ServerCalls sendWithData:(NSDictionary *)responseObject {
     NSLog(@"object is %@", [responseObject objectForKey:@"transaction"]);
@@ -75,7 +84,7 @@
     if([success caseInsensitiveCompare:@"success"] == NSOrderedSame )
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Awesome"
-                                                        message:@"Your face has been calibrated and saved!"
+                                                        message:@"Your profile has been saved! Click OK to use Momnts."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];

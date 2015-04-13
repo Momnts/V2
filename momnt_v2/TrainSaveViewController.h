@@ -20,5 +20,10 @@
 
 - (void) loadImage;
 - (IBAction)rememberNow:(id)sender;
+@property NSString *name;
+@property NSString *number;
+@property NSString *email;
+@property NSString *password;
+@property NSString *repassword;
 
 @end
