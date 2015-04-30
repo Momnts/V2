@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4100F0A51AD7814600FFC5C3 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4100F0A41AD7814600FFC5C3 /* HomePageViewController.m */; };
+		4106655B1AE72AAB005E75E4 /* Locater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106655A1AE72AAB005E75E4 /* Locater.m */; };
+		4106655D1AE72AD2005E75E4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4106655C1AE72AD2005E75E4 /* CoreLocation.framework */; };
 		410BACC61ADB4B99001996B4 /* rotate_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BACC51ADB4B99001996B4 /* rotate_camera.png */; };
+		410C5A5D1AE2FF5B0065F9B8 /* AllPicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410C5A5C1AE2FF5B0065F9B8 /* AllPicsViewController.m */; };
+		410C5A601AE318E00065F9B8 /* PicsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 410C5A5F1AE318E00065F9B8 /* PicsCollectionViewCell.m */; };
+		410C5A631AE321F00065F9B8 /* picture65.png in Resources */ = {isa = PBXBuildFile; fileRef = 410C5A611AE321F00065F9B8 /* picture65.png */; };
+		410C5A641AE321F00065F9B8 /* power86.png in Resources */ = {isa = PBXBuildFile; fileRef = 410C5A621AE321F00065F9B8 /* power86.png */; };
 		412AAE6C1AD8606000FC9DC4 /* page1.png in Resources */ = {isa = PBXBuildFile; fileRef = 412AAE681AD8606000FC9DC4 /* page1.png */; };
 		412AAE6D1AD8606000FC9DC4 /* page2.png in Resources */ = {isa = PBXBuildFile; fileRef = 412AAE691AD8606000FC9DC4 /* page2.png */; };
 		412AAE6E1AD8606000FC9DC4 /* page3.png in Resources */ = {isa = PBXBuildFile; fileRef = 412AAE6A1AD8606000FC9DC4 /* page3.png */; };
@@ -81,9 +86,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4100F0A31AD7814600FFC5C3 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
-		4100F0A41AD7814600FFC5C3 /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
+		410665591AE72AAB005E75E4 /* Locater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Locater.h; sourceTree = "<group>"; };
+		4106655A1AE72AAB005E75E4 /* Locater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Locater.m; sourceTree = "<group>"; };
+		4106655C1AE72AD2005E75E4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		410BACC51ADB4B99001996B4 /* rotate_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_camera.png; path = momnt_v2/rotate_camera.png; sourceTree = "<group>"; };
+		410C5A5B1AE2FF5B0065F9B8 /* AllPicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllPicsViewController.h; sourceTree = "<group>"; };
+		410C5A5C1AE2FF5B0065F9B8 /* AllPicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllPicsViewController.m; sourceTree = "<group>"; };
+		410C5A5E1AE318E00065F9B8 /* PicsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicsCollectionViewCell.h; sourceTree = "<group>"; };
+		410C5A5F1AE318E00065F9B8 /* PicsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicsCollectionViewCell.m; sourceTree = "<group>"; };
+		410C5A611AE321F00065F9B8 /* picture65.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picture65.png; path = ../../../../Downloads/picture65.png; sourceTree = "<group>"; };
+		410C5A621AE321F00065F9B8 /* power86.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = power86.png; path = ../../../../Downloads/power86.png; sourceTree = "<group>"; };
 		412AAE681AD8606000FC9DC4 /* page1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page1.png; sourceTree = "<group>"; };
 		412AAE691AD8606000FC9DC4 /* page2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page2.png; sourceTree = "<group>"; };
 		412AAE6A1AD8606000FC9DC4 /* page3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page3.png; sourceTree = "<group>"; };
@@ -188,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4106655D1AE72AD2005E75E4 /* CoreLocation.framework in Frameworks */,
 				41AA46CF1ACF52960095349A /* Foundation.framework in Frameworks */,
 				41AA46CD1ACF528E0095349A /* UIKit.framework in Frameworks */,
 				41AA46CB1ACF52810095349A /* QuartzCore.framework in Frameworks */,
@@ -268,6 +281,9 @@
 		41AA466F1ACE5EF10095349A = {
 			isa = PBXGroup;
 			children = (
+				4106655C1AE72AD2005E75E4 /* CoreLocation.framework */,
+				410C5A611AE321F00065F9B8 /* picture65.png */,
+				410C5A621AE321F00065F9B8 /* power86.png */,
 				410BACC51ADB4B99001996B4 /* rotate_camera.png */,
 				412AAEB21AD9BD8A00FC9DC4 /* suncity.jpg */,
 				412AAEB01AD9AD4D00FC9DC4 /* blindingLights.jpg */,
@@ -312,11 +328,15 @@
 		41AA467A1ACE5EF10095349A /* momnt_v2 */ = {
 			isa = PBXGroup;
 			children = (
+				410665591AE72AAB005E75E4 /* Locater.h */,
+				4106655A1AE72AAB005E75E4 /* Locater.m */,
 				412AAEB41AD9FDD100FC9DC4 /* Main.storyboard */,
+				410C5A5E1AE318E00065F9B8 /* PicsCollectionViewCell.h */,
+				410C5A5F1AE318E00065F9B8 /* PicsCollectionViewCell.m */,
+				410C5A5B1AE2FF5B0065F9B8 /* AllPicsViewController.h */,
+				410C5A5C1AE2FF5B0065F9B8 /* AllPicsViewController.m */,
 				41D968B11AD7ACED00E30B46 /* LoginViewController.h */,
 				41D968B21AD7ACED00E30B46 /* LoginViewController.m */,
-				4100F0A31AD7814600FFC5C3 /* HomePageViewController.h */,
-				4100F0A41AD7814600FFC5C3 /* HomePageViewController.m */,
 				41AA46D51ACF59260095349A /* ServerCalls.h */,
 				41AA46D61ACF59260095349A /* ServerCalls.m */,
 				412AAEB71ADB32E100FC9DC4 /* currentUser.plist */,
@@ -468,8 +488,10 @@
 				410BACC61ADB4B99001996B4 /* rotate_camera.png in Resources */,
 				412AAE751AD981B900FC9DC4 /* momnts_signin.jpg in Resources */,
 				412AAE6C1AD8606000FC9DC4 /* page1.png in Resources */,
+				410C5A641AE321F00065F9B8 /* power86.png in Resources */,
 				41AA468C1ACE5EF20095349A /* Images.xcassets in Resources */,
 				412AAE6D1AD8606000FC9DC4 /* page2.png in Resources */,
+				410C5A631AE321F00065F9B8 /* picture65.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +511,7 @@
 			files = (
 				41AC5F721AD3E08A0095789F /* TrainFaceViewController.m in Sources */,
 				41AA46811ACE5EF10095349A /* AppDelegate.m in Sources */,
+				4106655B1AE72AAB005E75E4 /* Locater.m in Sources */,
 				412AAEA81AD98D5100FC9DC4 /* UIButton+AFNetworking.m in Sources */,
 				41AA46AF1ACF4EB70095349A /* TrainSaveViewController.m in Sources */,
 				412AAEAC1AD98D5100FC9DC4 /* UIWebView+AFNetworking.m in Sources */,
@@ -496,15 +519,16 @@
 				412AAE8C1AD98D3A00FC9DC4 /* AFHTTPSessionManager.m in Sources */,
 				41AA46D71ACF59260095349A /* ServerCalls.m in Sources */,
 				412AAEA91AD98D5100FC9DC4 /* UIImageView+AFNetworking.m in Sources */,
+				410C5A5D1AE2FF5B0065F9B8 /* AllPicsViewController.m in Sources */,
 				412AAE8D1AD98D3A00FC9DC4 /* AFNetworkReachabilityManager.m in Sources */,
 				412AAE8A1AD98D3A00FC9DC4 /* AFHTTPRequestOperation.m in Sources */,
 				412AAE901AD98D3A00FC9DC4 /* AFURLRequestSerialization.m in Sources */,
 				412AAE8F1AD98D3A00FC9DC4 /* AFURLConnectionOperation.m in Sources */,
 				412AAE921AD98D3A00FC9DC4 /* AFURLSessionManager.m in Sources */,
-				4100F0A51AD7814600FFC5C3 /* HomePageViewController.m in Sources */,
 				41AA46DA1ACF608C0095349A /* TestDetectViewController.m in Sources */,
 				412AAEA61AD98D5100FC9DC4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				41AA46B21ACF4ED80095349A /* TestFacesTableViewController.m in Sources */,
+				410C5A601AE318E00065F9B8 /* PicsCollectionViewCell.m in Sources */,
 				41AA46841ACE5EF20095349A /* momnt_v2.xcdatamodeld in Sources */,
 				41AA467E1ACE5EF10095349A /* main.m in Sources */,
 				412AAEAF1AD9A73D00FC9DC4 /* SignUpViewController.m in Sources */,

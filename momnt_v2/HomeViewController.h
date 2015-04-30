@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "ServerCalls.h"
 #import "SignUpViewController.h"
+#import "TestCaptureViewController.h"
 
 @interface HomeViewController : UIViewController <ServerCallsDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *CaptureButton;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) NSArray *pageImages;
 @property NSString *email_str;
 @property NSString *password_str;
+@property NSString *userId;
 @property NSString *path;
 
 @end

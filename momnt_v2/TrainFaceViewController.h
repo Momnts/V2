@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) NSMutableArray* imagesArray;
 @property (nonatomic, strong) UIImage* capturedImage;
+@property (nonatomic, strong) ServerCalls *client;
 
 @property NSString *name;
 @property NSString *number;
@@ -23,5 +24,7 @@
 @property NSString *password;
 @property NSString *repassword;
 @property NSString *path;
+@property NSString *userID;
+
 
 @end

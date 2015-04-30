@@ -269,6 +269,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [TFVC setName:self.name];
         [TFVC setNumber:self.number];
         [TFVC setPassword:self.password];
+        [TFVC setUserID:self.userID];
     }
     if ([[segue identifier] isEqualToString:@"TrainCaptured"])
     {

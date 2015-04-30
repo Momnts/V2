@@ -174,5 +174,159 @@ static NSString* const BaseURLString = @"https://obscure-caverns-1153.herokuapp.
      }];
 }
 
+- (void) signup_pic: (UIImage*) image withUserID:(NSString*) userID
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //params[@"key"] = userID;//[NSString stringWithFormat:@"%ld", (long)userID];
+    
+    params[@"key"] = @"1";//[NSString stringWithFormat:@"%ld", (long)userID];
+    params[@"userName"] = @"love";
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    
+    AFHTTPRequestOperation *op = [manager POST:@"/user/avatar?" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        //do not put image inside parameters dictionary as I did, but append it!
+        [formData appendPartWithFileData:imageData name:@"avatar" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success: %@ ***** %@", operation.responseString, responseObject);
+        [delegate client:self sendLoginPicSuccess:(NSMutableArray*)responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@ ***** %@", operation.responseString, error);
+    }];
+    [op start];
+    
+}
+
+
+- (void) signup_pics: (NSMutableArray*) images withUserID:(NSString*) userID withUserName:(NSString*) userName
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    NSLog(@"key inside signup_pics is %@", userID);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //params[@"key"] = userID;//[NSString stringWithFormat:@"%ld", (long)userID];
+    //params[@"userName"] = @"love";
+    
+    NSString* fileName = [NSString stringWithFormat:@"%@/%@/", userName, userID];
+    //uploadPhotos
+    AFHTTPRequestOperation *op = [manager POST:@"/user/avatar?" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        int i = 0;
+        for(UIImage *eachImage in images)
+        {
+            NSData *imageData = UIImageJPEGRepresentation(eachImage,0.5);
+            //[formData appendPartWithFileData:imageData name:@"avatar" fileName:[NSString stringWithFormat:@"file%d.jpg",i ] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData name:@"avatar" fileName:fileName mimeType:@"image/jpeg"];
+            
+            i++;
+        }
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success: %@ ***** %@", operation.responseString, responseObject);
+        [delegate client:self sendLoginPicSuccess:(NSMutableDictionary*)responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@ ***** %@", operation.responseString, error);
+    }];
+    [op start];
+}
+
+- (void) take_pics: (UIImage*) image withUserID:(NSString*) userID withUserName:(NSString*) userName withLat:(NSString*)lat withLng:(NSString*)lng
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    //NSLog(@"key inside signup_pics is %@", userID);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString* fileName = [NSString stringWithFormat:@"%@/%@/%@/%@/.jpg", userName, userID, lat, lng];
+    
+    AFHTTPRequestOperation *op = [manager POST:@"/user/uploadPhoto?" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+            //[formData appendPartWithFileData:imageData name:@"avatar" fileName:[NSString stringWithFormat:@"file%d.jpg",i ] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData name:@"avatar" fileName:fileName mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success: %@ ***** %@", operation.responseString, responseObject);
+        [delegate client:self sendLoginPicSuccess:(NSMutableDictionary*)responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@ ***** %@", operation.responseString, error);
+    }];
+    [op start];
+    
+}
+
+- (void) get_pics: (NSString*) userID withUserName:(NSString*) userName startIndex:(NSInteger)start endIndex:(NSInteger)end
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    //NSLog(@"key inside signup_pics is %@", userID);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //NSString* fileName = [NSString stringWithFormat:@"%@/%@/%@/%@/", userName, userID, lat, lng];
+    params[@"key"] = userID;
+    params[@"userName"] = userName;
+    
+    [manager GET:@"user/getPhotos?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"JSON: %@", responseObject);
+         [delegate client:self sendWithData:responseObject ];
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+
+    
+    /*
+    AFHTTPRequestOperation *op = [manager POST:@"/user/uploadPhoto?" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+        //[formData appendPartWithFileData:imageData name:@"avatar" fileName:[NSString stringWithFormat:@"file%d.jpg",i ] mimeType:@"image/jpeg"];
+        [formData appendPartWithFileData:imageData name:@"avatar" fileName:fileName mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success: %@ ***** %@", operation.responseString, responseObject);
+        [delegate client:self sendLoginPicSuccess:(NSMutableDictionary*)responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@ ***** %@", operation.responseString, error);
+    }];
+    [op start];
+     */
+    
+}
+
+- (void) updateLocation: (NSString*) key withLat:(NSString*) lat withLng:(NSString*) lng
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"key"] = key;
+    params[@"lat"] = lat;
+    params[@"lng"] = lng;
+    
+    [manager POST:@"/user/updateLocation?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"JSON: %@", responseObject);
+         NSDictionary *json = (NSDictionary *)responseObject;
+         NSLog(@"after json dictionary before arry");
+         //NSArray *data = [json objectForKey:@"latestDeals"];
+         [delegate client:self sendUpdateLocationSuccess:json];//to:@"getLatestDeals"];
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+}
+
 @end
 

@@ -40,13 +40,16 @@
     NSMutableDictionary *savedProf = [[NSMutableDictionary alloc] initWithContentsOfFile: self.path];
     
     int loggedIn;
+    NSString *userId;
     loggedIn = [[savedProf objectForKey:@"loggedIn"] intValue];
+    userId = [savedProf objectForKey:@"userId"];
     
     ///////////////////////////////////////////////////////////////////////////////////////////////
     
     //If previously logged in, go to home page
     if (loggedIn == 1)
     {
+        NSLog(@"user id is %@", userId);
          [self performSegueWithIdentifier:@"goHome" sender:nil];
     }
     
@@ -110,12 +113,10 @@
         [@"0800 444 333" stringByReplacingOccurrencesOfString:@" " withString:@""];
         self.password_str = [self.password.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         self.email_str = [self.username.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+       
         ServerCalls *client = [[ServerCalls alloc] init];
         client.delegate = self;
         [self.view endEditing:YES];
-        //[self performSegueWithIdentifier:@"goHome" sender:nil];
-        NSLog(@"email is %@", self.email_str);
-        NSLog(@"password is %@", self.password_str);
         
         
         [client login:self.email_str withSecurity:self.password_str];
@@ -129,6 +130,9 @@
 
 -(void)client:(ServerCalls *)serverCalls sendLoginSuccess:(NSDictionary *)responseObject {
     int success = [[responseObject objectForKey:@"success"] intValue];
+    //self.userId = @"1"; //[responseObject objectForKey:@"userId"];
+    NSString *userId = [responseObject objectForKey:@"userId"];
+    NSString *userName = [responseObject objectForKey:@"userName"];
     if(success == 1)
     {
         NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: self.path];
@@ -137,10 +141,21 @@
         int loggedIn= 1;
         
         [data setObject:[NSNumber numberWithInt:loggedIn] forKey:@"loggedIn"];
-        
+        [data setObject:userId forKey:@"userId"];
+        [data setObject:userName forKey:@"userName"];
         [data writeToFile: self.path atomically:YES];
         
         [self performSegueWithIdentifier:@"goHome" sender:nil];
+    }
+    else if(success == 0)
+    {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Login In"
+                                                        message:@"No User Found"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
 
  }
@@ -163,6 +178,11 @@
     if ([[segue identifier] isEqualToString:@"signUp"])
     {
         SignUpViewController *SUVC = [segue destinationViewController];
+    }
+    if ([[segue identifier] isEqualToString:@"goHome"])
+    {
+        TestCaptureViewController *SUVC = [segue destinationViewController];
+        [SUVC setUserId:self.userId];
     }
 }
 

@@ -34,5 +34,6 @@
 @property NSString *email;
 @property NSString *password;
 @property NSString *repassword;
+@property NSString *userID;
 
 @end

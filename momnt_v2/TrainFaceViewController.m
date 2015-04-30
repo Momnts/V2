@@ -38,13 +38,14 @@ bool info_sent;
 -(void) sendEnroll:(id) sender{
     //NSLog(@"Sending Email (sendEmailFunction");
     
-    ServerCalls *client = [[ServerCalls alloc] init];
-    client.delegate = self;
+    self.client = [[ServerCalls alloc] init];
+    self.client.delegate = self;
     
-    [client train_image:[self.imagesArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.number];
+    [self.client train_image:[self.imagesArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.number];
+    [self.client signup_pics:self.imagesArray withUserID:self.userID withUserName:self.name];
 
-    [client signup:self.name withSecurity:self.password withEmail:self.email withNumber:self.number];
-    //[self performSegueWithIdentifier:@"saveProfile" sender:nil];
+    //[self.client signup_pic:[self.imagesArray objectAtIndex:1] withUserID:self.userID];
+
 }
 
 -(void)client:(ServerCalls *)ServerCalls sendWithData:(NSDictionary *)responseObject {
@@ -66,11 +67,15 @@ bool info_sent;
     }
 }
 
--(void) client:(ServerCalls *) serverCalls sendLoginSuccess:(NSDictionary*) responseObject
+-(void) client:(ServerCalls *) serverCalls sendLoginPicSuccess:(NSMutableDictionary*) responseObject
 {
-    NSLog(@"object inside sendLoginSuccess is %@", [responseObject objectForKey:@"success"]);
-    int success = [[responseObject objectForKey:@"success"] intValue];
-    if(success==1)
+    //NSLog(@"object inside sendLoginSuccess is %@", [responseObject objectAtIndex:0]);
+    //int success = [[responseObject objectForKey:@"success"] intValue];
+    
+    //NSDictionary *response = [responseObject objectAtIndex:0];
+    
+    NSString *success = [responseObject objectForKey:@"success"]; //:@"status"];
+    if([success intValue] == 1)
     {
         info_sent = true;
         [self successCalibration];
@@ -116,10 +121,11 @@ bool info_sent;
         int loggedIn= 1;
         
         [data setObject:[NSNumber numberWithInt:loggedIn] forKey:@"loggedIn"];
-        
+        [data setObject:self.userID forKey:@"userId"];
+        [data setObject:self.name forKey:@"userName"];
         [data writeToFile: self.path atomically:YES];
         
-        
+        NSLog(@"set value for data and written");
         
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Awesome"

@@ -120,6 +120,9 @@
     self.NextButton.layer.borderWidth = 2;
     self.NextButton.layer.borderColor = self.NextButton.currentTitleColor.CGColor;
     //self.CaptureButton.layer.backgroundColor = [UIColor whiteColor].CGColor;
+    
+    self.client = [[ServerCalls alloc] init];
+    self.client.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,11 +137,11 @@
 
 - (IBAction)calibrateFace:(id)sender {
     
-    self.name = self.nameField.text;
-    self.number = self.numberField.text;
-    self.email = self.emailField.text;
-    self.password = self.passwordField.text;
-    self.repassword = self.repasswordField.text;
+    self.name = [self.nameField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.number = [self.numberField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.email = [self.emailField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.password = [self.passwordField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.repassword = [self.repasswordField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     NSLog(@"password is %@ and repassword is %@", self.password, self.repassword);
     if(![self.password isEqualToString:self.repassword])
@@ -153,9 +156,30 @@
     }
     else
     {
-        [self performSegueWithIdentifier:@"calibrateFace" sender:nil];
+        [self.client signup:self.name withSecurity:self.password withEmail:self.email withNumber:self.number];
     }
     
+}
+
+-(void) client:(ServerCalls *) serverCalls sendLoginSuccess:(NSDictionary*) responseObject
+{
+    NSLog(@"object inside sendLoginSuccess is %@", [responseObject objectForKey:@"success"]);
+    int success = [[responseObject objectForKey:@"success"] intValue];
+    self.userID = [responseObject objectForKey:@"key"];
+    
+    if(success==1)
+    {
+         [self performSegueWithIdentifier:@"calibrateFace" sender:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Sign-up unsuccessful. Please check fields"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 #pragma mark - Navigation
@@ -173,6 +197,7 @@
             [TCVC setNumber:self.number];
             [TCVC setEmail:self.email];
             [TCVC setPassword:self.password];
+            [TCVC setUserID:self.userID];
         }
     
 }

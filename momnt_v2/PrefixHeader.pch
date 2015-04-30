@@ -25,5 +25,7 @@
 #import <MessageUI/MessageUI.h>
 #import "AFNetworking.h"
 #import "KairosSDK.h"
+#import <CoreLocation/CoreLocation.h>
+
 
 #endif

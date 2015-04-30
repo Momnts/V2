@@ -14,35 +14,42 @@
 
 @implementation TestCaptureViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.navigationBarHidden = YES;
+    //self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.CaptureButton.layer.cornerRadius = 30;
+    self.CaptureButton.layer.cornerRadius = 40;
     self.CaptureButton.layer.borderWidth = 5;
     self.CaptureButton.layer.borderColor = self.CaptureButton.currentTitleColor.CGColor;
+    self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
     
     self.ReverseCameraButton.layer.cornerRadius = 30;
     self.ReverseCameraButton.layer.borderWidth = 5;
     self.ReverseCameraButton.layer.borderColor = [UIColor clearColor].CGColor;
     UIImage *backgroundImage = [UIImage imageNamed:@"rotate_camera.png"];
     [self.ReverseCameraButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
-    self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
+    
+    //<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+    self.LogOffButton.layer.cornerRadius = 30;
+    self.LogOffButton.layer.borderWidth = 5;
+    self.LogOffButton.layer.borderColor = [UIColor clearColor].CGColor;
+    UIImage *backgroundImage_logOff = [UIImage imageNamed:@"power86.png"];
+    [self.LogOffButton setBackgroundImage:backgroundImage_logOff forState:UIControlStateNormal];
+    
+    //<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+    self.SeeButton.layer.cornerRadius = 30;
+    self.SeeButton.layer.borderWidth = 5;
+    self.SeeButton.layer.borderColor = [UIColor clearColor].CGColor;
+    UIImage *backgroundImage_seeImage = [UIImage imageNamed:@"picture65.png"];
+    [self.SeeButton setBackgroundImage:backgroundImage_seeImage forState:UIControlStateNormal];
+    
     self.imageView = nil;
     self.camera_side = @"back";
+    self.imagesArray = [[NSMutableArray alloc] init];
     [self initCapture:self.camera_side];
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)logOff:(id)sender {
-    
-    //Getting Path
     
     //Getting Plist directory
     NSError *error;
@@ -59,7 +66,46 @@
         [fileManager copyItemAtPath:bundle toPath: self.path error:&error];
     }
     
-    //Updating Login Info
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //Checking to see login by reading pList data
+    NSMutableDictionary *savedProf = [[NSMutableDictionary alloc] initWithContentsOfFile: self.path];
+    self.userId = [savedProf objectForKey:@"userId"];
+    self.userName = [savedProf objectForKey:@"userName"];
+    
+    NSLog(@"USER ID IS %@", self.userId);
+    
+    [[Locater sharedLocater] initLocater:self.userId];
+    [[Locater sharedLocater] startUpdating];
+    
+    self.client = [[ServerCalls alloc] init];
+    self.client.delegate = self;
+    
+    
+    //NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
+    //NSString *lat = [latAndLong objectForKey:@"lat"];
+    //NSString *lng =[latAndLong objectForKey:@"lng"];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillDisappear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)logOff:(id)sender {
+    
+    //Updating Logout Info
     
     NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: self.path];
     
@@ -67,6 +113,8 @@
     int loggedIn= 0;
     
     [data setObject:[NSNumber numberWithInt:loggedIn] forKey:@"loggedIn"];
+    [data setObject:@"0" forKey:@"userId"];
+    [data setObject:@"" forKey:@"userName"];
     
     [data writeToFile: self.path atomically:YES];
     
@@ -75,21 +123,6 @@
 }
 
 - (IBAction)reverseCamera:(id)sender {
-    
-    /*
-    
-    if([self.camera_side isEqualToString:@"front"])
-    {
-        self.camera_side = @"back";
-    }
-    else
-    {
-        self.camera_side = @"front";
-        //NSLog(@"changing camera to front");
-    }
-    
-    [self initCapture:self.camera_side];
-    */
     
     //Change camera source
     if(_captureSession)
@@ -126,6 +159,26 @@
         
         //Commit all the configuration changes at once
         [_captureSession commitConfiguration];
+    }
+}
+
+- (IBAction)seePictures:(id)sender {
+    [self.client get_pics:self.userId withUserName:self.userName startIndex:1 endIndex:10];
+}
+
+-(void) client:(ServerCalls *) serverCalls sendWithData:(NSDictionary *)responseObject
+{
+    //NSLog(@"object inside sendLoginSuccess is %@", [responseObject objectAtIndex:0]);
+    //int success = [[responseObject objectForKey:@"success"] intValue];
+    
+    //NSDictionary *response = [responseObject objectAtIndex:0];
+    
+    NSString *success = [responseObject objectForKey:@"success"]; //:@"status"];
+    self.imagesLocation = [responseObject objectForKey:@"locationList"];
+    if([success intValue] == 1)
+    {
+        NSLog(@"Just got pictures!");
+        [self performSegueWithIdentifier:@"SeePictures" sender:nil];
     }
 }
 
@@ -301,8 +354,178 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 
 - (IBAction)captureNow:(id)sender {
-    [self performSegueWithIdentifier:@"detectFaces" sender:nil];
+    //[self performSegueWithIdentifier:@"detectFaces" sender:nil];
+    
+    UIImage *resizedImage = [self imageWithImage:self.capturedImage scaledToSize:CGSizeMake(90, 120)];
+    //NSLog(@"adding picture. hegith is %f and width is %f", resizedImage.size.height, resizedImage.size.width);
+    NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
+    NSString *lat = [latAndLong objectForKey:@"lat"];
+    NSString *lng =[latAndLong objectForKey:@"lng"];
+    
+    
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [self.client take_pics:resizedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
+        
+        dispatch_async( dispatch_get_main_queue(), ^{
+            NSLog(@"just send picture asynchronously");
+        });
+    });
+     
+    
+    //[self.client take_pics:resizedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
+    
+    [self.imagesArray addObject:resizedImage];
+    
+    [UIView animateKeyframesWithDuration:0.5 delay:0.0 options:nil animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^{
+            self.CaptureButton.layer.backgroundColor = [UIColor redColor].CGColor;
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
+            self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
+        }];
+    } completion:nil];
 }
+
+/*
+-(void)faceDetector
+{
+    NSLog(@"size is %f, %f", self.capturedImage.size.width, self.capturedImage.size.height);
+    
+    //for parallel threading
+    [self performSelectorInBackground:@selector(markFaces:) withObject:self.capturedImage];
+    
+    [self.view addSubview:self.imageView];
+    // flip image on y-axis to match coordinate system used by core image
+    //[self.imageView setTransform:CGAffineTransformMakeScale(1, -1)];
+    
+    // flip the entire window to make everything right side up
+    //[self.view setTransform:CGAffineTransformMakeScale(1, -1)];
+}
+
+- (UIImage *)imageByCroppingImage:(UIImage *)image withSize:(CGRect)bounds
+{
+    CGRect cropRect = CGRectMake(bounds.origin.x-50, bounds.origin.y-50, bounds.size.width+100, bounds.size.height+100);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
+    
+    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    UIImage *cropped_rotated = [UIImage imageWithCGImage:cropped.CGImage
+                                                   scale:1.0
+                                             orientation:UIImageOrientationRight];
+    
+    return cropped_rotated;
+}
+
+
+-(void)markFaces:(UIImage *)facePicture
+{
+    int exifOrientation;
+    NSLog(@"face orientation is %ld", facePicture.imageOrientation);
+    switch (facePicture.imageOrientation) {
+        case UIImageOrientationUp:
+            exifOrientation = 1;
+            break;
+        case UIImageOrientationDown:
+            exifOrientation = 3;
+            break;
+        case UIImageOrientationLeft:
+            exifOrientation = 8;
+            break;
+        case UIImageOrientationRight:
+            exifOrientation = 6;
+            break;
+        case UIImageOrientationUpMirrored:
+            exifOrientation = 2;
+            break;
+        case UIImageOrientationDownMirrored:
+            exifOrientation = 4;
+            break;
+        case UIImageOrientationLeftMirrored:
+            exifOrientation = 5;
+            break;
+        case UIImageOrientationRightMirrored:
+            exifOrientation = 7;
+            break;
+        default:
+            break;
+    }
+    
+    // draw a CI image with the previously loaded face detection picture
+    CIImage* image = [CIImage imageWithCGImage:facePicture.CGImage];
+    
+    NSLog(@"Inside markFaces size is %f, %f",facePicture.size.width, facePicture.size.height);
+    
+    // create a face detector - since speed is not an issue we'll use a high accuracy
+    // detector
+    CIDetector* detector = [CIDetector detectorOfType:CIDetectorTypeFace
+                                              context:nil options:[NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy]];
+    // create an array containing all the detected faces from the detector
+    NSArray* features = [detector featuresInImage:image
+                                          options:@{CIDetectorImageOrientation:[NSNumber numberWithInt:exifOrientation]}];
+    
+    // we'll iterate through every detected face. CIFaceFeature provides us
+    // with the width for the entire face, and the coordinates of each eye
+    // and the mouth if detected. Also provided are BOOL's for the eye's and
+    // mouth so we can check if they already exist.
+    CGFloat imgViewCoeff_width = self.imageView.bounds.size.width/self.captured_image.size.width;
+    CGFloat imgViewCoeff_height = self.imageView.bounds.size.height/self.captured_image.size.height;
+    NSLog(@"number of faces detected is %lu", (unsigned long)features.count);
+    
+    _faceArray = [[NSMutableArray alloc] init];
+    
+    for(CIFaceFeature* faceFeature in features)
+    {
+        // get the width of the face
+        CGFloat faceWidth = faceFeature.bounds.size.width;
+        NSLog(@"[width, height] is %f, %f", self.imageView.bounds.size.width, self.imageView.bounds.size.height);
+        NSLog(@"[width, height, x, y] is %f, %f, %f, %f", faceFeature.bounds.size.width, faceFeature.bounds.size.height, faceFeature.bounds.origin.x, faceFeature.bounds.origin.y);
+        
+        // create a UIView using the bounds of the face
+        //CGRect face_bounds = CGRectMake(faceFeature.bounds.origin.x*imgViewCoeff_width, faceFeature.bounds.origin.y*imgViewCoeff_height, faceFeature.bounds.size.width*imgViewCoeff_width, faceFeature.bounds.size.height*imgViewCoeff_height);
+        CGRect face_bounds = CGRectMake(faceFeature.bounds.origin.y*imgViewCoeff_height, faceFeature.bounds.origin.x*imgViewCoeff_width, faceFeature.bounds.size.height*imgViewCoeff_height, faceFeature.bounds.size.width*imgViewCoeff_width);
+        UIView* faceView = [[UIView alloc] initWithFrame:face_bounds];
+        
+        // add a border around the newly created UIView
+        faceView.layer.borderWidth = 1;
+        faceView.layer.borderColor = [[UIColor redColor] CGColor];
+        
+        // add the new view to create a box around the face
+        [self.imageView addSubview:faceView];
+        
+        [_faceArray addObject:[self imageByCroppingImage:facePicture withSize:faceFeature.bounds]];
+        
+    }
+}
+ */
+
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+
+-(void) client:(ServerCalls *) serverCalls sendLoginPicSuccess:(NSMutableDictionary*) responseObject
+{
+    //NSLog(@"object inside sendLoginSuccess is %@", [responseObject objectAtIndex:0]);
+    //int success = [[responseObject objectForKey:@"success"] intValue];
+    
+    //NSDictionary *response = [responseObject objectAtIndex:0];
+    
+    NSString *success = [responseObject objectForKey:@"success"]; //:@"status"];
+    if([success intValue] == 1)
+    {
+        NSLog(@"Just logged picture!");
+    }
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -314,6 +537,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     {
         TestDetectViewController *TDVC = [segue destinationViewController];
         [TDVC setCapturedImage:self.capturedImage];
+    }
+    
+    if ([[segue identifier] isEqualToString:@"SeePictures"])
+    {
+        AllPicsViewController *APVC = [segue destinationViewController];
+        [APVC setImagesArray:self.imagesArray];
+        [APVC setImagesLocation:self.imagesLocation];
     }
 }
 @end
