@@ -13,7 +13,14 @@
 @end
 
 @implementation TestCaptureViewController
+// return true if the device has a retina display, false otherwise
+#define IS_RETINA_DISPLAY() [[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2.0f
 
+// return the scale value based on device's display (2 retina, 1 other)
+#define DISPLAY_SCALE IS_RETINA_DISPLAY() ? 2.0f : 1.0f
+
+// if the device has a retina display return the real scaled pixel size, otherwise the same size will be returned
+#define PIXEL_SIZE(size) IS_RETINA_DISPLAY() ? CGSizeMake(size.width/2.0f, size.height/2.0f) : size
 
 
 - (void)viewDidLoad {
@@ -354,53 +361,57 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 
 - (IBAction)captureNow:(id)sender {
-    //[self performSegueWithIdentifier:@"detectFaces" sender:nil];
+    NSLog(@"UIImage before scaling is [width, height] is %f, %f", self.capturedImage.size.width, self.capturedImage.size.height);
     
-    UIImage *resizedImage = [self imageWithImage:self.capturedImage scaledToSize:CGSizeMake(90, 120)];
-    //NSLog(@"adding picture. hegith is %f and width is %f", resizedImage.size.height, resizedImage.size.width);
+    //UIImage *pic = [[UIImage alloc] initWithCGImage:self.capturedImage.CGImage scale:DISPLAY_SCALE orientation:UIImageOrientationRight];    // UIImageOrientationUp];
+    
+    //NSLog(@"UIImage after scaling is [width, height] is %f, %f", pic.size.width, pic.size.height);
+    dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [UIView animateKeyframesWithDuration:0.3 delay:0.0 options:nil animations:^{
+            [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^{
+                self.CaptureButton.layer.backgroundColor = [UIColor redColor].CGColor;
+            }];
+            [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
+                self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
+            }];
+        } completion:nil];
+        
+        dispatch_async( dispatch_get_main_queue(), ^{
+            NSLog(@"detected faces in image");
+        });
+    });
+ 
+    
+    UIImage *resizedImage = self.capturedImage;
     NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
     NSString *lat = [latAndLong objectForKey:@"lat"];
     NSString *lng =[latAndLong objectForKey:@"lng"];
+    __block UIImage* detectedImage;
     
-    
-    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [self.client take_pics:resizedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
+        detectedImage = [self markFaces:resizedImage];
         
         dispatch_async( dispatch_get_main_queue(), ^{
-            NSLog(@"just send picture asynchronously");
+            NSLog(@"detected faces in image");
+        });
+    });
+    
+    dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"about to send picture");
+        [self.client take_pics:detectedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
+        
+        dispatch_async( dispatch_get_main_queue(), ^{
+            NSLog(@"sent picture asynchronously");
         });
     });
      
     
     //[self.client take_pics:resizedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
     
-    [self.imagesArray addObject:resizedImage];
+    [self.imagesArray addObject:detectedImage];
     
-    [UIView animateKeyframesWithDuration:0.5 delay:0.0 options:nil animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^{
-            self.CaptureButton.layer.backgroundColor = [UIColor redColor].CGColor;
-        }];
-        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
-            self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
-        }];
-    } completion:nil];
-}
-
-/*
--(void)faceDetector
-{
-    NSLog(@"size is %f, %f", self.capturedImage.size.width, self.capturedImage.size.height);
-    
-    //for parallel threading
-    [self performSelectorInBackground:@selector(markFaces:) withObject:self.capturedImage];
-    
-    [self.view addSubview:self.imageView];
-    // flip image on y-axis to match coordinate system used by core image
-    //[self.imageView setTransform:CGAffineTransformMakeScale(1, -1)];
-    
-    // flip the entire window to make everything right side up
-    //[self.view setTransform:CGAffineTransformMakeScale(1, -1)];
 }
 
 - (UIImage *)imageByCroppingImage:(UIImage *)image withSize:(CGRect)bounds
@@ -417,11 +428,45 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return cropped_rotated;
 }
 
+- (UIImage *)imageWithRect:(UIImage *)image withSize:(CGRect)bounds
+{
 
--(void)markFaces:(UIImage *)facePicture
+    // begin a graphics context of sufficient size
+    UIGraphicsBeginImageContext(image.size);
+    
+    // draw original image into the context
+    [image drawAtPoint:CGPointZero];
+    
+    // get the context for CoreGraphics
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    // set stroking color and draw circle
+    [[UIColor greenColor] setStroke];
+    
+    // make circle rect 5 px from border
+    CGRect circleRect = CGRectMake(bounds.origin.x, bounds.origin.y,
+                                   bounds.size.width,
+                                   bounds.size.height);
+    
+    // setting line
+    CGContextSetLineWidth(ctx, 4.0);
+    
+    // draw rect
+    CGContextStrokeRect(ctx, circleRect);
+    
+    // make image out of bitmap context
+    UIImage *retImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // free the context
+    UIGraphicsEndImageContext();
+    
+    return retImage;
+}
+
+-(UIImage*) markFaces:(UIImage *)facePicture
 {
     int exifOrientation;
-    NSLog(@"face orientation is %ld", facePicture.imageOrientation);
+   
     switch (facePicture.imageOrientation) {
         case UIImageOrientationUp:
             exifOrientation = 1;
@@ -450,12 +495,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         default:
             break;
     }
-    
+
     // draw a CI image with the previously loaded face detection picture
     CIImage* image = [CIImage imageWithCGImage:facePicture.CGImage];
-    
-    NSLog(@"Inside markFaces size is %f, %f",facePicture.size.width, facePicture.size.height);
-    
     // create a face detector - since speed is not an issue we'll use a high accuracy
     // detector
     CIDetector* detector = [CIDetector detectorOfType:CIDetectorTypeFace
@@ -463,41 +505,97 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     // create an array containing all the detected faces from the detector
     NSArray* features = [detector featuresInImage:image
                                           options:@{CIDetectorImageOrientation:[NSNumber numberWithInt:exifOrientation]}];
-    
-    // we'll iterate through every detected face. CIFaceFeature provides us
-    // with the width for the entire face, and the coordinates of each eye
-    // and the mouth if detected. Also provided are BOOL's for the eye's and
-    // mouth so we can check if they already exist.
-    CGFloat imgViewCoeff_width = self.imageView.bounds.size.width/self.captured_image.size.width;
-    CGFloat imgViewCoeff_height = self.imageView.bounds.size.height/self.captured_image.size.height;
-    NSLog(@"number of faces detected is %lu", (unsigned long)features.count);
-    
-    _faceArray = [[NSMutableArray alloc] init];
+    NSLog(@"Number of faces detected in image is %lu", (unsigned long)features.count);
+    NSLog(@"Image [width, height] is %f, %f",facePicture.size.width, facePicture.size.height);
+    self.facesArray = [[NSMutableArray alloc] init];
     
     for(CIFaceFeature* faceFeature in features)
     {
-        // get the width of the face
-        CGFloat faceWidth = faceFeature.bounds.size.width;
-        NSLog(@"[width, height] is %f, %f", self.imageView.bounds.size.width, self.imageView.bounds.size.height);
-        NSLog(@"[width, height, x, y] is %f, %f, %f, %f", faceFeature.bounds.size.width, faceFeature.bounds.size.height, faceFeature.bounds.origin.x, faceFeature.bounds.origin.y);
+        CGRect rectBound;
+        CGFloat x, y, width, height;
+        if(exifOrientation == 1)
+        {
+            x = faceFeature.bounds.origin.x;
+            y = facePicture.size.height - faceFeature.bounds.origin.y;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 3)
+        {
+            x = facePicture.size.width - faceFeature.bounds.origin.x;
+            y = faceFeature.bounds.origin.y;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 8)
+        {
+            x = facePicture.size.width - faceFeature.bounds.origin.y;
+            y = facePicture.size.height - faceFeature.bounds.origin.x;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 6)
+        {
+            x = faceFeature.bounds.origin.y;
+            y = faceFeature.bounds.origin.x;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 2)
+        {
+            x = facePicture.size.width - faceFeature.bounds.origin.x;
+            y = facePicture.size.height - faceFeature.bounds.origin.y;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 4)
+        {
+            x = faceFeature.bounds.origin.x;
+            y = faceFeature.bounds.origin.y;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 5)
+        {
+            x = facePicture.size.width - faceFeature.bounds.origin.y;
+            y = faceFeature.bounds.origin.x;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
+        else if(exifOrientation == 7)
+        {
+            x = faceFeature.bounds.origin.y;
+            y = facePicture.size.height - faceFeature.bounds.origin.x;
+            width = faceFeature.bounds.size.width;
+            height = faceFeature.bounds.size.height;
+            
+            rectBound = CGRectMake(x, y, width, height);
+        }
         
-        // create a UIView using the bounds of the face
-        //CGRect face_bounds = CGRectMake(faceFeature.bounds.origin.x*imgViewCoeff_width, faceFeature.bounds.origin.y*imgViewCoeff_height, faceFeature.bounds.size.width*imgViewCoeff_width, faceFeature.bounds.size.height*imgViewCoeff_height);
-        CGRect face_bounds = CGRectMake(faceFeature.bounds.origin.y*imgViewCoeff_height, faceFeature.bounds.origin.x*imgViewCoeff_width, faceFeature.bounds.size.height*imgViewCoeff_height, faceFeature.bounds.size.width*imgViewCoeff_width);
-        UIView* faceView = [[UIView alloc] initWithFrame:face_bounds];
+        NSLog(@"Orientation is %d and [x, y, width, height] is %f, %f, %f, %f",exifOrientation,x,y,width,height);
         
-        // add a border around the newly created UIView
-        faceView.layer.borderWidth = 1;
-        faceView.layer.borderColor = [[UIColor redColor] CGColor];
-        
-        // add the new view to create a box around the face
-        [self.imageView addSubview:faceView];
-        
-        [_faceArray addObject:[self imageByCroppingImage:facePicture withSize:faceFeature.bounds]];
+        [self.facesArray addObject:[self imageByCroppingImage:facePicture withSize:rectBound]];
+        facePicture = [self imageWithRect:facePicture withSize:rectBound];
         
     }
+    
+    return facePicture;
 }
- */
+
 
 
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {

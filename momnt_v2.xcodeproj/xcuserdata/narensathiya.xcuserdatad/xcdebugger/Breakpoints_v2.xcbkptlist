@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "momnt_v2/TestCaptureViewController.m"
-            timestampString = "451556149.587439"
+            timestampString = "452224377.076138"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "-captureNow:"
             landmarkType = "5">
          </BreakpointContent>

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIImage *capturedImage;
 @property (strong, nonatomic) IBOutlet UIButton *CaptureButton;
 @property (strong, nonatomic) NSMutableArray *imagesArray;
+@property (strong, nonatomic) NSMutableArray *facesArray;
 @property (strong, nonatomic) NSMutableArray *imagesLocation;
 @property (strong, nonatomic) NSString *userId;
 @property (strong, nonatomic) NSString *userName;
@@ -39,7 +40,8 @@
 @property NSString *camera_side;
 @property ServerCalls *client;
 
-- (void)initCapture;
-- (IBAction)captureNow:(id)sender;
+- (void) initCapture;
+- (IBAction) captureNow:(id)sender;
+- (UIImage*) markFaces:(UIImage *)facePicture;
 
 @end

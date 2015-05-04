@@ -73,6 +73,7 @@
 		41AC5F721AD3E08A0095789F /* TrainFaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC5F711AD3E08A0095789F /* TrainFaceViewController.m */; };
 		41AC5F751AD3E0C30095789F /* TrainFaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC5F741AD3E0C30095789F /* TrainFaceTableViewCell.m */; };
 		41D968B31AD7ACED00E30B46 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D968B21AD7ACED00E30B46 /* LoginViewController.m */; };
+		41E2678E1AF6F2C3004069CE /* StagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E2678D1AF6F2C3004069CE /* StagingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +194,8 @@
 		41AC5F741AD3E0C30095789F /* TrainFaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainFaceTableViewCell.m; sourceTree = "<group>"; };
 		41D968B11AD7ACED00E30B46 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41D968B21AD7ACED00E30B46 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		41E2678C1AF6F2C3004069CE /* StagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StagingViewController.h; sourceTree = "<group>"; };
+		41E2678D1AF6F2C3004069CE /* StagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StagingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,6 +334,8 @@
 				410665591AE72AAB005E75E4 /* Locater.h */,
 				4106655A1AE72AAB005E75E4 /* Locater.m */,
 				412AAEB41AD9FDD100FC9DC4 /* Main.storyboard */,
+				41E2678C1AF6F2C3004069CE /* StagingViewController.h */,
+				41E2678D1AF6F2C3004069CE /* StagingViewController.m */,
 				410C5A5E1AE318E00065F9B8 /* PicsCollectionViewCell.h */,
 				410C5A5F1AE318E00065F9B8 /* PicsCollectionViewCell.m */,
 				410C5A5B1AE2FF5B0065F9B8 /* AllPicsViewController.h */,
@@ -539,6 +544,7 @@
 				412AAE8E1AD98D3A00FC9DC4 /* AFSecurityPolicy.m in Sources */,
 				412AAEAB1AD98D5100FC9DC4 /* UIRefreshControl+AFNetworking.m in Sources */,
 				412AAEA71AD98D5100FC9DC4 /* UIAlertView+AFNetworking.m in Sources */,
+				41E2678E1AF6F2C3004069CE /* StagingViewController.m in Sources */,
 				41AC5F751AD3E0C30095789F /* TrainFaceTableViewCell.m in Sources */,
 				412AAE8B1AD98D3A00FC9DC4 /* AFHTTPRequestOperationManager.m in Sources */,
 				41D968B31AD7ACED00E30B46 /* LoginViewController.m in Sources */,
