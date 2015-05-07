@@ -20,4 +20,13 @@
 }
 */
 
+
+- (id)initWithFrame:(CGRect)frame
+{
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
+    [self.contentView addSubview:self.imageView];
+    return self;
+}
+
 @end

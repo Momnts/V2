@@ -316,7 +316,7 @@ static NSString* const BaseURLString = @"https://obscure-caverns-1153.herokuapp.
     
     [manager POST:@"/user/updateLocation?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSLog(@"JSON: %@", responseObject);
+         NSLog(@"in updateLocation JSON: %@", responseObject);
          NSDictionary *json = (NSDictionary *)responseObject;
          NSLog(@"after json dictionary before arry");
          //NSArray *data = [json objectForKey:@"latestDeals"];
@@ -327,6 +327,55 @@ static NSString* const BaseURLString = @"https://obscure-caverns-1153.herokuapp.
          NSLog(@"Error: %@", error);
      }];
 }
+
+-(void) addFriend: (NSString*) userName toUser:(NSString*) friendUser
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"userName"] = userName;
+    params[@"requested"] = friendUser;
+    
+    [manager POST:@"/user/addFriend?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"JSON: %@", responseObject);
+         NSDictionary *json = (NSDictionary *)responseObject;
+         NSLog(@"after json dictionary before arry");
+         //NSArray *data = [json objectForKey:@"latestDeals"];
+         [delegate client:self sendFriendSuccess:json];//to:@"getLatestDeals"];
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+    
+}
+
+-(void) getFriends: (NSString*) userName
+{
+    NSURL *baseURL = [NSURL URLWithString:BaseURLString];
+    
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"userName"] = userName;
+    
+    [manager POST:@"/user/getFriends?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         //NSLog(@"JSON: %@", responseObject);
+         NSMutableArray *json = (NSMutableArray *)responseObject;
+         //NSLog(@"after json dictionary before arry");
+         [delegate client:self getFriendSuccess:json];
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+    
+}
+
 
 @end
 

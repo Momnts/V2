@@ -42,6 +42,8 @@
 		412AAEB31AD9BD8A00FC9DC4 /* suncity.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 412AAEB21AD9BD8A00FC9DC4 /* suncity.jpg */; };
 		412AAEB61AD9FDD100FC9DC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412AAEB41AD9FDD100FC9DC4 /* Main.storyboard */; };
 		412AAEB81ADB32E100FC9DC4 /* currentUser.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412AAEB71ADB32E100FC9DC4 /* currentUser.plist */; };
+		416699341AF9C88A00B3B9C5 /* FriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 416699331AF9C88A00B3B9C5 /* FriendList.m */; };
+		416699371AF9D68200B3B9C5 /* friendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 416699361AF9D68200B3B9C5 /* friendCell.m */; };
 		41AA467E1ACE5EF10095349A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA467D1ACE5EF10095349A /* main.m */; };
 		41AA46811ACE5EF10095349A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46801ACE5EF10095349A /* AppDelegate.m */; };
 		41AA46841ACE5EF20095349A /* momnt_v2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46821ACE5EF20095349A /* momnt_v2.xcdatamodeld */; };
@@ -72,8 +74,13 @@
 		41AA46DA1ACF608C0095349A /* TestDetectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46D91ACF608C0095349A /* TestDetectViewController.m */; };
 		41AC5F721AD3E08A0095789F /* TrainFaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC5F711AD3E08A0095789F /* TrainFaceViewController.m */; };
 		41AC5F751AD3E0C30095789F /* TrainFaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC5F741AD3E0C30095789F /* TrainFaceTableViewCell.m */; };
+		41BD7A301AFB452600A5170E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD7A2F1AFB452600A5170E /* User.m */; };
 		41D968B31AD7ACED00E30B46 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D968B21AD7ACED00E30B46 /* LoginViewController.m */; };
 		41E2678E1AF6F2C3004069CE /* StagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E2678D1AF6F2C3004069CE /* StagingViewController.m */; };
+		41E267911AF701CD004069CE /* RCImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E267901AF701CD004069CE /* RCImage.m */; };
+		41E267941AF709C2004069CE /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E267931AF709C2004069CE /* AddFriendViewController.m */; };
+		41E267971AF7142E004069CE /* ShareImgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E267961AF7142E004069CE /* ShareImgCell.m */; };
+		41E2679A1AF746C3004069CE /* faceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E267991AF746C3004069CE /* faceButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +152,10 @@
 		412AAEB21AD9BD8A00FC9DC4 /* suncity.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = suncity.jpg; sourceTree = "<group>"; };
 		412AAEB51AD9FDD100FC9DC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		412AAEB71ADB32E100FC9DC4 /* currentUser.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = currentUser.plist; sourceTree = "<group>"; };
+		416699321AF9C88A00B3B9C5 /* FriendList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendList.h; sourceTree = "<group>"; };
+		416699331AF9C88A00B3B9C5 /* FriendList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendList.m; sourceTree = "<group>"; };
+		416699351AF9D68200B3B9C5 /* friendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friendCell.h; sourceTree = "<group>"; };
+		416699361AF9D68200B3B9C5 /* friendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = friendCell.m; sourceTree = "<group>"; };
 		41AA46781ACE5EF10095349A /* momnt_v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = momnt_v2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41AA467C1ACE5EF10095349A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41AA467D1ACE5EF10095349A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -192,10 +203,20 @@
 		41AC5F711AD3E08A0095789F /* TrainFaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainFaceViewController.m; sourceTree = "<group>"; };
 		41AC5F731AD3E0C30095789F /* TrainFaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainFaceTableViewCell.h; sourceTree = "<group>"; };
 		41AC5F741AD3E0C30095789F /* TrainFaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainFaceTableViewCell.m; sourceTree = "<group>"; };
+		41BD7A2E1AFB452600A5170E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		41BD7A2F1AFB452600A5170E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		41D968B11AD7ACED00E30B46 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		41D968B21AD7ACED00E30B46 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		41E2678C1AF6F2C3004069CE /* StagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StagingViewController.h; sourceTree = "<group>"; };
 		41E2678D1AF6F2C3004069CE /* StagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StagingViewController.m; sourceTree = "<group>"; };
+		41E2678F1AF701CD004069CE /* RCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCImage.h; sourceTree = "<group>"; };
+		41E267901AF701CD004069CE /* RCImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCImage.m; sourceTree = "<group>"; };
+		41E267921AF709C2004069CE /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
+		41E267931AF709C2004069CE /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
+		41E267951AF7142E004069CE /* ShareImgCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareImgCell.h; sourceTree = "<group>"; };
+		41E267961AF7142E004069CE /* ShareImgCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareImgCell.m; sourceTree = "<group>"; };
+		41E267981AF746C3004069CE /* faceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = faceButton.h; sourceTree = "<group>"; };
+		41E267991AF746C3004069CE /* faceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = faceButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,8 +355,18 @@
 				410665591AE72AAB005E75E4 /* Locater.h */,
 				4106655A1AE72AAB005E75E4 /* Locater.m */,
 				412AAEB41AD9FDD100FC9DC4 /* Main.storyboard */,
+				41E267951AF7142E004069CE /* ShareImgCell.h */,
+				41E267961AF7142E004069CE /* ShareImgCell.m */,
+				41E267921AF709C2004069CE /* AddFriendViewController.h */,
+				41E267931AF709C2004069CE /* AddFriendViewController.m */,
 				41E2678C1AF6F2C3004069CE /* StagingViewController.h */,
 				41E2678D1AF6F2C3004069CE /* StagingViewController.m */,
+				416699321AF9C88A00B3B9C5 /* FriendList.h */,
+				416699331AF9C88A00B3B9C5 /* FriendList.m */,
+				416699351AF9D68200B3B9C5 /* friendCell.h */,
+				416699361AF9D68200B3B9C5 /* friendCell.m */,
+				41E267981AF746C3004069CE /* faceButton.h */,
+				41E267991AF746C3004069CE /* faceButton.m */,
 				410C5A5E1AE318E00065F9B8 /* PicsCollectionViewCell.h */,
 				410C5A5F1AE318E00065F9B8 /* PicsCollectionViewCell.m */,
 				410C5A5B1AE2FF5B0065F9B8 /* AllPicsViewController.h */,
@@ -361,6 +392,10 @@
 				41AA46A81ACF4E790095349A /* TrainCaptureViewController.m */,
 				41AA46AA1ACF4E9C0095349A /* TestCaptureViewController.h */,
 				41AA46AB1ACF4E9C0095349A /* TestCaptureViewController.m */,
+				41BD7A2E1AFB452600A5170E /* User.h */,
+				41BD7A2F1AFB452600A5170E /* User.m */,
+				41E2678F1AF701CD004069CE /* RCImage.h */,
+				41E267901AF701CD004069CE /* RCImage.m */,
 				41AA46AD1ACF4EB70095349A /* TrainSaveViewController.h */,
 				41AA46AE1ACF4EB70095349A /* TrainSaveViewController.m */,
 				41AA46B01ACF4ED80095349A /* TestFacesTableViewController.h */,
@@ -516,15 +551,21 @@
 			files = (
 				41AC5F721AD3E08A0095789F /* TrainFaceViewController.m in Sources */,
 				41AA46811ACE5EF10095349A /* AppDelegate.m in Sources */,
+				416699341AF9C88A00B3B9C5 /* FriendList.m in Sources */,
 				4106655B1AE72AAB005E75E4 /* Locater.m in Sources */,
 				412AAEA81AD98D5100FC9DC4 /* UIButton+AFNetworking.m in Sources */,
 				41AA46AF1ACF4EB70095349A /* TrainSaveViewController.m in Sources */,
 				412AAEAC1AD98D5100FC9DC4 /* UIWebView+AFNetworking.m in Sources */,
+				41E267941AF709C2004069CE /* AddFriendViewController.m in Sources */,
+				41BD7A301AFB452600A5170E /* User.m in Sources */,
 				412AAEAA1AD98D5100FC9DC4 /* UIProgressView+AFNetworking.m in Sources */,
 				412AAE8C1AD98D3A00FC9DC4 /* AFHTTPSessionManager.m in Sources */,
 				41AA46D71ACF59260095349A /* ServerCalls.m in Sources */,
+				41E2679A1AF746C3004069CE /* faceButton.m in Sources */,
 				412AAEA91AD98D5100FC9DC4 /* UIImageView+AFNetworking.m in Sources */,
+				416699371AF9D68200B3B9C5 /* friendCell.m in Sources */,
 				410C5A5D1AE2FF5B0065F9B8 /* AllPicsViewController.m in Sources */,
+				41E267971AF7142E004069CE /* ShareImgCell.m in Sources */,
 				412AAE8D1AD98D3A00FC9DC4 /* AFNetworkReachabilityManager.m in Sources */,
 				412AAE8A1AD98D3A00FC9DC4 /* AFHTTPRequestOperation.m in Sources */,
 				412AAE901AD98D3A00FC9DC4 /* AFURLRequestSerialization.m in Sources */,
@@ -539,6 +580,7 @@
 				412AAEAF1AD9A73D00FC9DC4 /* SignUpViewController.m in Sources */,
 				41AA46A91ACF4E790095349A /* TrainCaptureViewController.m in Sources */,
 				41AA46A61ACF4E560095349A /* HomeViewController.m in Sources */,
+				41E267911AF701CD004069CE /* RCImage.m in Sources */,
 				41AA46B51ACF4F010095349A /* TestFacesTableViewCell.m in Sources */,
 				41AA46AC1ACF4E9C0095349A /* TestCaptureViewController.m in Sources */,
 				412AAE8E1AD98D3A00FC9DC4 /* AFSecurityPolicy.m in Sources */,

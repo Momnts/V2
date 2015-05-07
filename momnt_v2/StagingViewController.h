@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShareImgCell.h"
+#import "RCImage.h"
+#import "faceButton.h"
+#import "FriendList.h"
 
 @interface StagingViewController : UITableViewController
+
+@property NSMutableArray *imageArray;
+- (void) faceClicked:(id)sender;
 
 @end

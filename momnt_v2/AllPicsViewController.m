@@ -37,7 +37,7 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     //NSString *searchTerm = self.searches[section];
     //return [self.searchResults[searchTerm] count];
-    
+    NSLog(@"image count is %lu", (unsigned long)self.imagesLocation.count);
     return self.imagesLocation.count;
 }
 
@@ -56,12 +56,24 @@
     NSString *imageUrl = [self.imagesLocation objectAtIndex:row];
     
     
-    NSURL *imageURL = [NSURL URLWithString:imageUrl];
-    
-    //[cell.discountImage setImageWithURL:imageURL];
+    NSURL *imageURL = [NSURL URLWithString:[imageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     [cell.imageView setImageWithURL:imageURL];
-    
+    /*
+    NSError* error = nil;
+    NSData* data = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingUncached error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    } else {
+        NSLog(@"Data has loaded successfully.");
+    }
+    UIImage* img = [[UIImage alloc] initWithData:data];
+    CGSize sizeImg = img.size;
+    NSLog(@"image url is %@", imageURL.description);
+    NSLog(@"the size of the image is %f, %f", sizeImg.width, sizeImg.height);
+    cell.imageView.image = img;
+    */
+    //cell.imageView.backgroundColor = [UIColor blackColor];
     //cell.imageView.image = self.imagesArray[indexPath.row];
     cell.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     return cell;
@@ -87,6 +99,7 @@
 
 #pragma mark – UICollectionViewDelegateFlowLayout
 
+/*
 // 1
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -96,15 +109,17 @@
     
     // 2
     CGSize retval = CGSizeMake(90, 120);
-    retval.height += 50; retval.width += 50; return retval;
-     
+    //retval.height += 50; retval.width += 50; return retval;
+    return retval;
 }
+ */
 
 // 3
+/*
 - (UIEdgeInsets)collectionView: (UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(50, 20, 50, 20);
 }
-
+*/
 
 
 

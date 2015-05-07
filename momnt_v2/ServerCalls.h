@@ -15,6 +15,8 @@
 -(void) client:(ServerCalls *) serverCalls sendWithData:(NSDictionary*) responseObject;
 -(void) client:(ServerCalls *) serverCalls sendWithNames:(NSMutableArray*) names;
 -(void) client:(ServerCalls *) serverCalls sendLoginSuccess:(NSDictionary*) responseObject;
+-(void) client:(ServerCalls *) serverCalls sendFriendSuccess:(NSDictionary*) responseObject;
+-(void) client:(ServerCalls *) serverCalls getFriendSuccess:(NSMutableArray *)responseObject;
 -(void) client:(ServerCalls *) serverCalls sendLoginPicSuccess:(NSMutableDictionary*) responseObject;
 -(void) client:(ServerCalls *) serverCalls sendUpdateLocationSuccess:(NSDictionary*) responseObject;
 @end
@@ -35,6 +37,7 @@
 - (void) take_pics: (UIImage*) image withUserID:(NSString*) userID withUserName:(NSString*) userName withLat:(NSString*)lat withLng:(NSString*)lng;
 - (void) get_pics: (NSString*) userID withUserName:(NSString*) userName startIndex:(NSInteger)start endIndex:(NSInteger)end;
 - (void) updateLocation: (NSString*) key withLat:(NSString*) lat withLng:(NSString*) lng;
-
+- (void) addFriend: (NSString*) userName toUser:(NSString*) friendUser;
+- (void) getFriends: (NSString*) userName;
 
 @end

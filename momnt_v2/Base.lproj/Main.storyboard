@@ -81,12 +81,12 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="d6U-KP-eN0">
                                 <rect key="frame" x="-8" y="-3" width="336" height="574"/>
-                                <color key="backgroundColor" red="0.1152346675" green="0.18458697490000001" blue="0.34345278530000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="380" id="x9x-2G-Zmd"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UVn-tb-CNy">
-                                    <size key="itemSize" width="161" height="161"/>
+                                    <size key="itemSize" width="118" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -96,11 +96,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="161" height="161"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="118" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLJ-kL-YyE">
-                                                    <rect key="frame" x="16" y="19" width="129" height="124"/>
+                                                    <rect key="frame" x="8" y="0.0" width="110" height="100"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -190,6 +190,24 @@
                                     <action selector="seePictures:" destination="N2w-dO-FpJ" eventType="touchDown" id="7Ti-0O-qhs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aaG-cK-VYo">
+                                <rect key="frame" x="228" y="165" width="76" height="30"/>
+                                <state key="normal" title="Add Friend">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addFriend:" destination="N2w-dO-FpJ" eventType="touchDown" id="Y6Z-eN-aIj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQq-Ds-Pfc">
+                                <rect key="frame" x="264" y="209" width="40" height="30"/>
+                                <state key="normal" title="Share">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareNow:" destination="N2w-dO-FpJ" eventType="touchDown" id="0I3-Gg-W2h"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -214,12 +232,51 @@
                         <segue destination="zQS-U2-pr4" kind="push" identifier="detectFaces" id="0dL-pX-av1"/>
                         <segue destination="BYZ-38-t0r" kind="push" identifier="backToLogin" id="4hG-Cd-A5T"/>
                         <segue destination="N64-UX-5Ks" kind="push" identifier="SeePictures" id="nnA-3P-kvX"/>
-                        <segue destination="cK7-gV-6Cg" kind="push" id="ddJ-vy-4Pr"/>
+                        <segue destination="cK7-gV-6Cg" kind="push" identifier="shareImages" id="ddJ-vy-4Pr"/>
+                        <segue destination="7X7-Aw-vJl" kind="push" identifier="addFriend" id="3EX-rT-H6N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="65i-ue-gGo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1065" y="805"/>
+        </scene>
+        <!--Add Friend View Controller-->
+        <scene sceneID="DbZ-wd-Epe">
+            <objects>
+                <viewController id="7X7-Aw-vJl" customClass="AddFriendViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Lu9-fR-iFq"/>
+                        <viewControllerLayoutGuide type="bottom" id="VFl-ig-hNw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X82-qS-Ady">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zU9-h3-1Q9">
+                                <rect key="frame" x="11" y="220" width="293" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EtI-sn-vAI">
+                                <rect key="frame" x="145" y="269" width="30" height="30"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addFriend:" destination="7X7-Aw-vJl" eventType="touchDown" id="YIm-mi-s3e"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="IcN-gk-1Ll"/>
+                    <connections>
+                        <outlet property="inputFriend" destination="zU9-h3-1Q9" id="85g-v5-UeD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Z6-Ks-xEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="371" y="1519"/>
         </scene>
         <!--Test Detect View Controller-->
         <scene sceneID="RkX-7P-ksE">
@@ -244,14 +301,32 @@
             </objects>
             <point key="canvasLocation" x="1577" y="699"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Staging View Controller-->
         <scene sceneID="h2s-ay-sFU">
             <objects>
-                <tableViewController id="cK7-gV-6Cg" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cH6-Jn-XRX">
+                <tableViewController id="cK7-gV-6Cg" customClass="StagingViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="481" sectionHeaderHeight="22" sectionFooterHeight="22" id="cH6-Jn-XRX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImgCell" rowHeight="481" id="pUy-ov-1Dq" customClass="ShareImgCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pUy-ov-1Dq" id="rMS-YG-1h9">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dj-3f-kKU">
+                                            <rect key="frame" x="8" y="8" width="278" height="465"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="mainView" destination="8dj-3f-kKU" id="ZLs-ai-TpQ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="cK7-gV-6Cg" id="CxH-7H-Glq"/>
                             <outlet property="delegate" destination="cK7-gV-6Cg" id="MF7-es-kJQ"/>
@@ -261,7 +336,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsE-KW-ied" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1326" y="1519"/>
+            <point key="canvasLocation" x="1327" y="1513"/>
         </scene>
         <!--Test Faces Table View Controller-->
         <scene sceneID="S4P-SD-hLT">

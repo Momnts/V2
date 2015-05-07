@@ -11,7 +11,10 @@
 #import "AllPicsViewController.h"
 #import "Locater.h"
 #import "ServerCalls.h"
-
+#import "RCImage.h"
+#import "AddFriendViewController.h"
+#import "StagingViewController.h"
+#import "User.h"
 
 @interface TestCaptureViewController : UIViewController<AVCaptureVideoDataOutputSampleBufferDelegate> {
     AVCaptureSession *_captureSession;
@@ -26,6 +29,7 @@
 @property (nonatomic, strong) UIImage *capturedImage;
 @property (strong, nonatomic) IBOutlet UIButton *CaptureButton;
 @property (strong, nonatomic) NSMutableArray *imagesArray;
+@property (strong, nonatomic) NSMutableArray *RCImagesArray;
 @property (strong, nonatomic) NSMutableArray *facesArray;
 @property (strong, nonatomic) NSMutableArray *imagesLocation;
 @property (strong, nonatomic) NSString *userId;
@@ -42,6 +46,8 @@
 
 - (void) initCapture;
 - (IBAction) captureNow:(id)sender;
-- (UIImage*) markFaces:(UIImage *)facePicture;
+- (RCImage*) markFaces:(RCImage *)facePicture;
+- (IBAction)addFriend:(id)sender;
+- (IBAction)shareNow:(id)sender;
 
 @end

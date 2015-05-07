@@ -32,26 +32,89 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.imageArray.count;
+    
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"ImgCell";
+    ShareImgCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
+    if(cell == nil){
+        cell = [[ShareImgCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    long row = [indexPath row];
+    RCImage *currentObject = [self.imageArray objectAtIndex:row];
+    
+    UIImageView *inputImage = [[UIImageView alloc] initWithImage:currentObject.primaryImage];
+    [cell.mainView addSubview:inputImage];
+    
+    for (int i=0; i < currentObject.facesBoxes.count; i++ )
+    {
+        NSValue *rctFrame = [currentObject.facesBoxes objectAtIndex:i];
+        faceButton *button = [faceButton buttonWithType:UIButtonTypeRoundedRect];
+        button.tag = [indexPath row];
+        button.imgNum = [indexPath row]; 
+        button.personNum = i;
+        button.currentCell = cell;
+        [button addTarget:self
+                   action:@selector(faceClicked:)
+         forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"Identify" forState:UIControlStateNormal];
+        button.frame = [rctFrame CGRectValue];
+        //button.layer.borderColor = [UIColor greenColor].CGColor;
+        [button setBackgroundColor:[[UIColor greenColor] colorWithAlphaComponent:0.2f] ];
+        
+        [cell.mainView insertSubview:button aboveSubview:cell.mainView];
+        //[cell.mainView addSubview:button];
+    }
+    
+    //[inputImage setTransform:CGAffineTransformMakeScale(1, -1)];
+    //[cell.imageView setTransform:CGAffineTransformMakeScale(1, -1)];
+    
+    //[cell.imageView setImage:currentObject.primaryImage];
+    
+    NSLog(@"image view [w,h] is %f and %f", cell.imageView.bounds.size.width, cell.imageView.bounds.size.height);
     
     return cell;
 }
-*/
+
+- (void) faceClicked:(id) sender
+{
+    faceButton *button = (faceButton*) sender;
+    NSLog(@"picture clicked on is %ld", (long)button.imgNum);
+    NSLog(@"person clicked on is %ld", (long)button.personNum);
+    
+    RCImage* image = [self.imageArray objectAtIndex:button.imgNum];
+    NSValue *rctFrame = [image.facesBoxes objectAtIndex:button.personNum];
+    
+    //NSIndexPath *path = [NSIndexPath indexPathForRow:button.imgNum inSection:0];
+    //ShareImgCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:path];
+    
+    //FriendList *tableView = [[FriendList alloc] initWithFrame:CGRectMake(5,[rctFrame CGRectValue].origin.y+[rctFrame CGRectValue].size.height, image.primaryImage.size.width,150)];
+    
+    FriendList *tableView = [[FriendList alloc] initWithFrame:CGRectMake(5,[rctFrame CGRectValue].origin.y+[rctFrame CGRectValue].size.height, image.primaryImage.size.width,150) image:button.imgNum withFace:button.personNum];
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    tableView.delegate = tableView;
+    tableView.dataSource = tableView;
+    //[tableView reloadData];
+
+    //[cell.mainView addSubview:tableView];
+    
+    //[button.currentCell addSubview:tableView];
+    [button.currentCell addSubview:tableView];
+    //[button.currentCell bringSubviewToFront:tableView];
+    
+    [self.tableView reloadData];
+}
 
 /*
 // Override to support conditional editing of the table view.

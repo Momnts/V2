@@ -13,6 +13,7 @@
 @end
 
 @implementation TestCaptureViewController
+
 // return true if the device has a retina display, false otherwise
 #define IS_RETINA_DISPLAY() [[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2.0f
 
@@ -56,6 +57,7 @@
     self.imageView = nil;
     self.camera_side = @"back";
     self.imagesArray = [[NSMutableArray alloc] init];
+    self.RCImagesArray = [[NSMutableArray alloc] init];
     [self initCapture:self.camera_side];
     
     //Getting Plist directory
@@ -84,9 +86,11 @@
     
     [[Locater sharedLocater] initLocater:self.userId];
     [[Locater sharedLocater] startUpdating];
+    //[[User currentUser] initUser:self.userName];
     
     self.client = [[ServerCalls alloc] init];
     self.client.delegate = self;
+    [[User currentUser] initUser:self.userName];
     
     
     //NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
@@ -98,6 +102,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -383,16 +388,20 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     });
  
     
-    UIImage *resizedImage = self.capturedImage;
+    //UIImage *resizedImage = self.capturedImage;
+    RCImage* capturedImage = [[RCImage alloc] init];
+    capturedImage.primaryImage = self.capturedImage;
     NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
-    NSString *lat = [latAndLong objectForKey:@"lat"];
-    NSString *lng =[latAndLong objectForKey:@"lng"];
-    __block UIImage* detectedImage;
+    //NSString *lat = [latAndLong objectForKey:@"lat"];
+    //NSString *lng =[latAndLong objectForKey:@"lng"];
+    capturedImage.takenLat = [latAndLong objectForKey:@"lat"];
+    capturedImage.takenLng = [latAndLong objectForKey:@"lng"];
+    __block RCImage* detectedImage;
     
     dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        detectedImage = [self markFaces:resizedImage];
-        
+        //detectedImage = [self markFaces:resizedImage];
+        detectedImage = [self markFaces:capturedImage];
         dispatch_async( dispatch_get_main_queue(), ^{
             NSLog(@"detected faces in image");
         });
@@ -400,7 +409,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"about to send picture");
-        [self.client take_pics:detectedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
+        [self.client take_pics:detectedImage.primaryImage withUserID:self.userId withUserName:self.userName withLat:detectedImage.takenLat withLng:detectedImage.takenLng];
         
         dispatch_async( dispatch_get_main_queue(), ^{
             NSLog(@"sent picture asynchronously");
@@ -410,8 +419,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     //[self.client take_pics:resizedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
     
-    [self.imagesArray addObject:detectedImage];
-    
+    //[self.imagesArray addObject:detectedImage];
+    [self.RCImagesArray addObject:detectedImage];
 }
 
 - (UIImage *)imageByCroppingImage:(UIImage *)image withSize:(CGRect)bounds
@@ -463,11 +472,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return retImage;
 }
 
--(UIImage*) markFaces:(UIImage *)facePicture
+-(RCImage*) markFaces:(RCImage *)facePicture
 {
     int exifOrientation;
    
-    switch (facePicture.imageOrientation) {
+    switch (facePicture.primaryImage.imageOrientation) {
         case UIImageOrientationUp:
             exifOrientation = 1;
             break;
@@ -497,7 +506,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 
     // draw a CI image with the previously loaded face detection picture
-    CIImage* image = [CIImage imageWithCGImage:facePicture.CGImage];
+    CIImage* image = [CIImage imageWithCGImage:facePicture.primaryImage.CGImage];
     // create a face detector - since speed is not an issue we'll use a high accuracy
     // detector
     CIDetector* detector = [CIDetector detectorOfType:CIDetectorTypeFace
@@ -506,8 +515,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     NSArray* features = [detector featuresInImage:image
                                           options:@{CIDetectorImageOrientation:[NSNumber numberWithInt:exifOrientation]}];
     NSLog(@"Number of faces detected in image is %lu", (unsigned long)features.count);
-    NSLog(@"Image [width, height] is %f, %f",facePicture.size.width, facePicture.size.height);
+    NSLog(@"Image [width, height] is %f, %f",facePicture.primaryImage.size.width, facePicture.primaryImage.size.height);
     self.facesArray = [[NSMutableArray alloc] init];
+    facePicture.facesBoxes = [[NSMutableArray alloc] init];
     
     for(CIFaceFeature* faceFeature in features)
     {
@@ -516,7 +526,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         if(exifOrientation == 1)
         {
             x = faceFeature.bounds.origin.x;
-            y = facePicture.size.height - faceFeature.bounds.origin.y;
+            y = facePicture.primaryImage.size.height - faceFeature.bounds.origin.y;
             width = faceFeature.bounds.size.width;
             height = faceFeature.bounds.size.height;
             
@@ -524,7 +534,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         else if(exifOrientation == 3)
         {
-            x = facePicture.size.width - faceFeature.bounds.origin.x;
+            x = facePicture.primaryImage.size.width - faceFeature.bounds.origin.x;
             y = faceFeature.bounds.origin.y;
             width = faceFeature.bounds.size.width;
             height = faceFeature.bounds.size.height;
@@ -533,8 +543,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         else if(exifOrientation == 8)
         {
-            x = facePicture.size.width - faceFeature.bounds.origin.y;
-            y = facePicture.size.height - faceFeature.bounds.origin.x;
+            x = facePicture.primaryImage.size.width - faceFeature.bounds.origin.y;
+            y = facePicture.primaryImage.size.height - faceFeature.bounds.origin.x;
             width = faceFeature.bounds.size.width;
             height = faceFeature.bounds.size.height;
             
@@ -551,8 +561,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         else if(exifOrientation == 2)
         {
-            x = facePicture.size.width - faceFeature.bounds.origin.x;
-            y = facePicture.size.height - faceFeature.bounds.origin.y;
+            x = facePicture.primaryImage.size.width - faceFeature.bounds.origin.x;
+            y = facePicture.primaryImage.size.height - faceFeature.bounds.origin.y;
             width = faceFeature.bounds.size.width;
             height = faceFeature.bounds.size.height;
             
@@ -569,7 +579,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
         else if(exifOrientation == 5)
         {
-            x = facePicture.size.width - faceFeature.bounds.origin.y;
+            x = facePicture.primaryImage.size.width - faceFeature.bounds.origin.y;
             y = faceFeature.bounds.origin.x;
             width = faceFeature.bounds.size.width;
             height = faceFeature.bounds.size.height;
@@ -579,7 +589,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         else if(exifOrientation == 7)
         {
             x = faceFeature.bounds.origin.y;
-            y = facePicture.size.height - faceFeature.bounds.origin.x;
+            y = facePicture.primaryImage.size.height - faceFeature.bounds.origin.x;
             width = faceFeature.bounds.size.width;
             height = faceFeature.bounds.size.height;
             
@@ -588,12 +598,22 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         NSLog(@"Orientation is %d and [x, y, width, height] is %f, %f, %f, %f",exifOrientation,x,y,width,height);
         
-        [self.facesArray addObject:[self imageByCroppingImage:facePicture withSize:rectBound]];
-        facePicture = [self imageWithRect:facePicture withSize:rectBound];
+        [self.facesArray addObject:[self imageByCroppingImage:facePicture.primaryImage withSize:rectBound]];
+        [facePicture.facesBoxes addObject:[NSValue valueWithCGRect:rectBound]];
+        //facePicture.primaryImage = [self imageWithRect:facePicture.primaryImage withSize:rectBound];
         
     }
     
     return facePicture;
+}
+
+- (IBAction)addFriend:(id)sender {
+     [self performSegueWithIdentifier:@"addFriend" sender:nil];
+}
+
+- (IBAction)shareNow:(id)sender {
+    
+    [self performSegueWithIdentifier:@"shareImages" sender:nil];
 }
 
 
@@ -637,11 +657,21 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [TDVC setCapturedImage:self.capturedImage];
     }
     
-    if ([[segue identifier] isEqualToString:@"SeePictures"])
+    else if ([[segue identifier] isEqualToString:@"SeePictures"])
     {
         AllPicsViewController *APVC = [segue destinationViewController];
         [APVC setImagesArray:self.imagesArray];
         [APVC setImagesLocation:self.imagesLocation];
+    }
+    else if ([[segue identifier] isEqualToString:@"addFriend"])
+    {
+        AddFriendViewController *AFVC = [segue destinationViewController];
+        [AFVC setUserName:self.userName];
+    }
+    else if ([[segue identifier] isEqualToString:@"shareImages"])
+    {
+        StagingViewController *SVC = [segue destinationViewController];
+        [SVC setImageArray:self.RCImagesArray];
     }
 }
 @end
