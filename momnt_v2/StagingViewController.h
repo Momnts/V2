@@ -11,10 +11,14 @@
 #import "RCImage.h"
 #import "faceButton.h"
 #import "FriendList.h"
+#import "ServerCalls.h"
+#import "Activations.h"
 
 @interface StagingViewController : UITableViewController
 
 @property NSMutableArray *imageArray;
+@property ServerCalls *client;
+
 - (void) faceClicked:(id)sender;
 
 @end

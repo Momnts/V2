@@ -24,6 +24,7 @@
     self.collectionView.dataSource = self;
     //self.client = [[ServerCalls alloc] init];
     //self.client.delegate = self;
+     NSLog(@"image count is %lu", (unsigned long) self.imagesLocation.count);
     
     [self.collectionView reloadData];
 }
@@ -37,7 +38,7 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     //NSString *searchTerm = self.searches[section];
     //return [self.searchResults[searchTerm] count];
-    NSLog(@"image count is %lu", (unsigned long)self.imagesLocation.count);
+   
     return self.imagesLocation.count;
 }
 

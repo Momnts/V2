@@ -8,12 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import "ServerCalls.h"
+#import "Activations.h"
 
 @interface User : NSObject <ServerCallsDelegate>
 
 + (User*) currentUser;
 - (NSMutableArray*) returnFriendsList;
-- (void) initUser:(NSString*)un;
+- (NSMutableDictionary*) returnFriendsIDMap;
+- (NSMutableArray*) returnStageQueue;
+- (void) initUser:(NSString*)un initID:(NSString*)ID;
+- (NSString*) returnUserName;
+- (NSString*) returnUserID;
+- (NSMutableArray*) returnActiveRecepients;
+- (NSMutableArray*) returnRecepients;
+- (NSInteger*) returnActiveRecepientsCount;
+- (void) updateFriendsList;
+- (void) activateFR;
+- (void) deactivateFR;
+- (BOOL) FRIsActivated;
+
 
 
 @end

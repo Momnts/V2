@@ -14,7 +14,7 @@
 @interface AllPicsViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) NSArray *imagesArray;
+//@property (strong, nonatomic) NSArray *imagesArray;
 @property (strong, nonatomic) NSMutableArray *imagesLocation;
 
 

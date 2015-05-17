@@ -32,7 +32,8 @@ bool info_sent;
     pic_sent = false;
     info_sent = false;
     
-    [KairosSDK initWithAppId:@"1bf095ad" appKey:@"64b5e29cf8484c0d25d61467b4da7558"];
+    //[KairosSDK initWithAppId:@"1bf095ad" appKey:@"64b5e29cf8484c0d25d61467b4da7558"];
+    [KairosSDK initWithAppId:@"7d430ebb" appKey:@"876f51893026dd083968a95edf571824"];
 }
 
 -(void) sendEnroll:(id) sender{
@@ -41,7 +42,8 @@ bool info_sent;
     self.client = [[ServerCalls alloc] init];
     self.client.delegate = self;
     
-    [self.client train_image:[self.imagesArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.number];
+    
+    [self.client train_image:[self.imagesArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.name];
     [self.client signup_pics:self.imagesArray withUserID:self.userID withUserName:self.name];
 
     //[self.client signup_pic:[self.imagesArray objectAtIndex:1] withUserID:self.userID];

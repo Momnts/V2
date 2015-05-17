@@ -15,5 +15,9 @@
 @property NSMutableArray *facesBoxes;
 @property NSString *takenLat;
 @property NSString *takenLng;
+@property NSString *takenTime;
+@property NSString *takenDate;
+@property NSMutableArray *recipients;
+@property NSMutableArray *recognizedIDs;
 
 @end

@@ -22,6 +22,99 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:@"Share"
+                                                                    style:UIBarButtonItemStyleDone
+                                                                   target:self
+                                                                   action:@selector(shareImgs:)];
+    
+    self.navigationItem.rightBarButtonItem = sendButton;
+    self.client = [[ServerCalls alloc] init];
+    self.client.delegate = self;
+    self.tableView.allowsSelection = NO;
+}
+
+-(void) shareImgs:(id) sender{
+    dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"about to send picture");
+        NSMutableArray *imagesArray = [[NSMutableArray alloc] init];
+        NSMutableArray *lngArray = [[NSMutableArray alloc] init];
+        NSMutableArray *latArray = [[NSMutableArray alloc] init];
+        //NSMutableArray *timeArray = [[NSMutableArray alloc] init];
+        NSMutableArray *dateArray = [[NSMutableArray alloc] init];
+        
+        NSMutableArray *stageQueue = [[User currentUser] returnStageQueue];
+        for (int i = 0; i < [[[User currentUser] returnStageQueue] count]; i++)
+        {
+            RCImage *image = stageQueue[i];
+            imagesArray[i] = image.primaryImage;
+            lngArray[i] = image.takenLng;
+            latArray[i] = image.takenLat;
+            //timeArray[i] = image.takenTime;
+            dateArray[i] = image.takenDate;
+        }
+        
+        [self.client shareImages:imagesArray withUserID:[[User currentUser] returnUserID] withUserName:[[User currentUser] returnUserName] withLat:lngArray withLng:latArray withDate:dateArray];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            NSLog(@"sent picture asynchronously");
+        });
+    });
+    
+}
+
+-(void)client:(ServerCalls *)serverCalls shareImagesSuccess:(NSMutableArray *)imagesID {
+    
+
+    
+    NSMutableArray *stageQueue = [[User currentUser] returnStageQueue];
+    NSMutableArray *metaData = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [imagesID count]; i++)
+    {
+        RCImage *image = stageQueue[i];
+        NSMutableDictionary *metadataEntry = [[NSMutableDictionary alloc] init];
+        [metadataEntry setValue:[imagesID objectAtIndex:i] forKey:@"photoId"];
+        [metadataEntry setValue:[[User currentUser] returnUserName] forKey:@"username"];
+        [metadataEntry setValue:image.takenLat forKey:@"lat"];
+        [metadataEntry setValue:image.takenLng forKey:@"lng"];
+        [metadataEntry setValue:image.takenDate forKey:@"date"];
+        
+        NSMutableDictionary* FriendIDMap = [[User currentUser] returnFriendsIDMap];
+        NSMutableArray *recepients = [[NSMutableArray alloc] init];
+        NSMutableArray *dwellers = [[NSMutableArray alloc] init];
+        
+        for (int j = 0; j<[image.recipients count]; j++)
+        {
+            Activations *activation = [image.recipients objectAtIndex:j];
+            [recepients addObject:[FriendIDMap objectForKey:activation.username]];
+            NSLog(@"in picture %d, image recepient is %@", i, activation.username);
+        }
+        
+        if(image.recipients.count == 0)
+            [metadataEntry setObject:@"" forKey:@"recepients"];
+        else
+            [metadataEntry setObject:recepients forKey:@"recepients"];
+        
+        
+        for (int j = 0; j<[image.recognizedIDs count]; j++)
+        {
+            [dwellers addObject:[FriendIDMap objectForKey:image.recognizedIDs]];
+            NSLog(@"in picture %d, face recognized is %@", i,[FriendIDMap objectForKey:image.recognizedIDs] );
+        }
+        
+        if(dwellers.count == 0)
+            [metadataEntry setObject:@"" forKey:@"dwellers"];
+        else
+            [metadataEntry setObject:dwellers forKey:@"dwellers"];
+        
+        //[metadataEntry setObject:@[@"2", @"4"] forKey:@"dwellers"];
+        
+        [metadataEntry setObject:@[@"naren@uci.edu", @"narensathiya92@gmail.com"] forKey:@"emailRecipients"];
+        
+        [metaData addObject:metadataEntry];
+    }
+    
+    [self.client shareMetadata:metaData];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,9 +130,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return self.imageArray.count;
-    
+
+    NSUInteger count = [[[User currentUser] returnStageQueue] count];
+    //NSLog(@"count is %lu", (unsigned long)count);
+    return count;
 }
 
 
@@ -52,7 +146,9 @@
     }
     
     long row = [indexPath row];
-    RCImage *currentObject = [self.imageArray objectAtIndex:row];
+    //RCImage *currentObject = [self.imageArray objectAtIndex:row];
+    
+    RCImage *currentObject = [[[User currentUser] returnStageQueue] objectAtIndex:row];
     
     UIImageView *inputImage = [[UIImageView alloc] initWithImage:currentObject.primaryImage];
     [cell.mainView addSubview:inputImage];
@@ -61,15 +157,17 @@
     {
         NSValue *rctFrame = [currentObject.facesBoxes objectAtIndex:i];
         faceButton *button = [faceButton buttonWithType:UIButtonTypeRoundedRect];
-        button.tag = [indexPath row];
-        button.imgNum = [indexPath row]; 
-        button.personNum = i;
-        button.currentCell = cell;
-        [button addTarget:self
-                   action:@selector(faceClicked:)
-         forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:@"Identify" forState:UIControlStateNormal];
-        button.frame = [rctFrame CGRectValue];
+        //button.tag = [indexPath row];
+        //button.imgNum = [indexPath row];
+        //button.personNum = i;
+        //button.currentCell = cell;
+        //[button addTarget:self
+        //           action:@selector(faceClicked:)
+        // forControlEvents:UIControlEventTouchUpInside];
+        NSLog(@"setTitle %@", currentObject.recognizedIDs);
+        [button setTitle:[currentObject.recognizedIDs objectAtIndex:i] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        button.frame = CGRectMake([rctFrame CGRectValue].origin.x, [rctFrame CGRectValue].origin.y-30, 100, 20);
         //button.layer.borderColor = [UIColor greenColor].CGColor;
         [button setBackgroundColor:[[UIColor greenColor] colorWithAlphaComponent:0.2f] ];
         
@@ -77,12 +175,10 @@
         //[cell.mainView addSubview:button];
     }
     
-    //[inputImage setTransform:CGAffineTransformMakeScale(1, -1)];
-    //[cell.imageView setTransform:CGAffineTransformMakeScale(1, -1)];
+    NSString *recipients =[[currentObject.recipients valueForKey:@"username"] componentsJoinedByString:@", "];
+    cell.recipientsLabel.text = recipients;
+    cell.recipientsLabel.textColor = [UIColor greenColor];
     
-    //[cell.imageView setImage:currentObject.primaryImage];
-    
-    NSLog(@"image view [w,h] is %f and %f", cell.imageView.bounds.size.width, cell.imageView.bounds.size.height);
     
     return cell;
 }
@@ -90,8 +186,8 @@
 - (void) faceClicked:(id) sender
 {
     faceButton *button = (faceButton*) sender;
-    NSLog(@"picture clicked on is %ld", (long)button.imgNum);
-    NSLog(@"person clicked on is %ld", (long)button.personNum);
+    //NSLog(@"picture clicked on is %ld", (long)button.imgNum);
+    //NSLog(@"person clicked on is %ld", (long)button.personNum);
     
     RCImage* image = [self.imageArray objectAtIndex:button.imgNum];
     NSValue *rctFrame = [image.facesBoxes objectAtIndex:button.personNum];
@@ -114,6 +210,15 @@
     //[button.currentCell bringSubviewToFront:tableView];
     
     [self.tableView reloadData];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 580;
+}
+
+-(void) client:(ServerCalls *) serverCalls savePhotoDataSuccess:(NSString*) success
+{
+    [self performSegueWithIdentifier:@"goHome" sender:nil];
 }
 
 /*

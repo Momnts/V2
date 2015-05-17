@@ -11,5 +11,6 @@
 @interface ShareImgCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *imgView;
 @property (strong, nonatomic) IBOutlet UIView *mainView;
+@property (strong, nonatomic) IBOutlet UILabel *recipientsLabel;
 
 @end

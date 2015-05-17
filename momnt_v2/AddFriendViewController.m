@@ -67,6 +67,7 @@
     //NSString *userName = [responseObject objectForKey:@"userName"];
     if(success == 1)
     {
+        [[User currentUser] updateFriendsList];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
                                                         message:@"You have added a new friend"
                                                        delegate:self

@@ -27,6 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     //self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     self.CaptureButton.layer.cornerRadius = 40;
@@ -37,27 +39,47 @@
     self.ReverseCameraButton.layer.cornerRadius = 30;
     self.ReverseCameraButton.layer.borderWidth = 5;
     self.ReverseCameraButton.layer.borderColor = [UIColor clearColor].CGColor;
-    UIImage *backgroundImage = [UIImage imageNamed:@"rotate_camera.png"];
+    UIImage *backgroundImage = [UIImage imageNamed:@"appbar.refresh.png"];
     [self.ReverseCameraButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
     
     //<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
     self.LogOffButton.layer.cornerRadius = 30;
     self.LogOffButton.layer.borderWidth = 5;
     self.LogOffButton.layer.borderColor = [UIColor clearColor].CGColor;
-    UIImage *backgroundImage_logOff = [UIImage imageNamed:@"power86.png"];
+    UIImage *backgroundImage_logOff = [UIImage imageNamed:@"appbar.power.png"];
     [self.LogOffButton setBackgroundImage:backgroundImage_logOff forState:UIControlStateNormal];
     
     //<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
     self.SeeButton.layer.cornerRadius = 30;
     self.SeeButton.layer.borderWidth = 5;
     self.SeeButton.layer.borderColor = [UIColor clearColor].CGColor;
-    UIImage *backgroundImage_seeImage = [UIImage imageNamed:@"picture65.png"];
+    UIImage *backgroundImage_seeImage = [UIImage imageNamed:@"appbar.image.multiple.png"];
     [self.SeeButton setBackgroundImage:backgroundImage_seeImage forState:UIControlStateNormal];
+    
+    self.AddFriendButton.layer.cornerRadius = 30;
+    self.AddFriendButton.layer.borderWidth = 5;
+    self.AddFriendButton.layer.borderColor = [UIColor clearColor].CGColor;
+    UIImage *backgroundImage_addFriend = [UIImage imageNamed:@"appbar.user.add.png"];
+    [self.AddFriendButton setBackgroundImage:backgroundImage_addFriend forState:UIControlStateNormal];
+    
+    self.StagingButton.layer.cornerRadius = 30;
+    self.StagingButton.layer.borderWidth = 5;
+    self.StagingButton.layer.borderColor = [UIColor clearColor].CGColor;
+    UIImage *backgroundImage_staging = [UIImage imageNamed:@"appbar.rocket.rotated.45.png"];
+    [self.StagingButton setBackgroundImage:backgroundImage_staging forState:UIControlStateNormal];
+    
+    self.chooseFriendsButton.layer.cornerRadius = 30;
+    self.chooseFriendsButton.layer.borderWidth = 5;
+    self.chooseFriendsButton.layer.borderColor = [UIColor clearColor].CGColor;
+    [self.chooseFriendsButton setTitle:@"" forState:UIControlStateNormal];
+    UIImage *backgroundImage_chooseFriends = [UIImage imageNamed:@"logo_transparent.png"];
+    [self.chooseFriendsButton setBackgroundImage:backgroundImage_chooseFriends forState:UIControlStateNormal];
     
     self.imageView = nil;
     self.camera_side = @"back";
     self.imagesArray = [[NSMutableArray alloc] init];
     self.RCImagesArray = [[NSMutableArray alloc] init];
+    self.namesArray = [[NSMutableArray alloc] init];
     [self initCapture:self.camera_side];
     
     //Getting Plist directory
@@ -84,13 +106,14 @@
     
     NSLog(@"USER ID IS %@", self.userId);
     
+    //COMMENT THIS OUT
     [[Locater sharedLocater] initLocater:self.userId];
     [[Locater sharedLocater] startUpdating];
-    //[[User currentUser] initUser:self.userName];
     
     self.client = [[ServerCalls alloc] init];
     self.client.delegate = self;
-    [[User currentUser] initUser:self.userName];
+    [[User currentUser] initUser:self.userName initID:self.userId];
+    [[User currentUser] activateFR];
     
     
     //NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
@@ -175,23 +198,24 @@
 }
 
 - (IBAction)seePictures:(id)sender {
-    [self.client get_pics:self.userId withUserName:self.userName startIndex:1 endIndex:10];
+    NSLog(@"about to see pictures");
+    [self performSegueWithIdentifier:@"SeePictures" sender:nil];
+    //[self.client get_pics:self.userId withUserName:self.userName startIndex:1 endIndex:10];
 }
 
--(void) client:(ServerCalls *) serverCalls sendWithData:(NSDictionary *)responseObject
-{
-    //NSLog(@"object inside sendLoginSuccess is %@", [responseObject objectAtIndex:0]);
-    //int success = [[responseObject objectForKey:@"success"] intValue];
+- (IBAction)chooseFriends:(id)sender {
     
-    //NSDictionary *response = [responseObject objectAtIndex:0];
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.4f;
+    transition.type = kCATransitionMoveIn;
+    transition.subtype = kCATransitionFromBottom;
+    [self.navigationController.view.layer addAnimation:transition
+                                                    forKey:kCATransition];
+    ActivateFriendsViewController *AFVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivateFriendsView"];;
+    [self.navigationController pushViewController:AFVC animated:NO];
     
-    NSString *success = [responseObject objectForKey:@"success"]; //:@"status"];
-    self.imagesLocation = [responseObject objectForKey:@"locationList"];
-    if([success intValue] == 1)
-    {
-        NSLog(@"Just got pictures!");
-        [self performSegueWithIdentifier:@"SeePictures" sender:nil];
-    }
+    
+     //[self performSegueWithIdentifier:@"activateFriends" sender:nil];
 }
 
 // Find a camera with the specified AVCaptureDevicePosition, returning nil if one is not found
@@ -212,14 +236,12 @@
     if([camera_side isEqualToString:@"back"])
     {
     /*We setup the input*/
-        NSLog(@"changing camera to back");
         captureInput = [AVCaptureDeviceInput
                                           deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo]
                                           error:nil];
     }
     else
     {
-        NSLog(@"changing camera to front");
         captureInput = [AVCaptureDeviceInput
                         deviceInputWithDevice:[self frontFacingCameraIfAvailable]
                         error:nil];
@@ -366,7 +388,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 
 - (IBAction)captureNow:(id)sender {
-    NSLog(@"UIImage before scaling is [width, height] is %f, %f", self.capturedImage.size.width, self.capturedImage.size.height);
+    //NSLog(@"UIImage before scaling is [width, height] is %f, %f", self.capturedImage.size.width, self.capturedImage.size.height);
     
     //UIImage *pic = [[UIImage alloc] initWithCGImage:self.capturedImage.CGImage scale:DISPLAY_SCALE orientation:UIImageOrientationRight];    // UIImageOrientationUp];
     
@@ -383,19 +405,39 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         } completion:nil];
         
         dispatch_async( dispatch_get_main_queue(), ^{
-            NSLog(@"detected faces in image");
+            //NSLog(@"detected faces in image");
         });
     });
  
+    NSDate *today = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+   [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm"];
+    //NSString *currentTime = [dateFormatter stringFromDate:today];
+    //[dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    NSString *currentDate = [dateFormatter stringFromDate:today];
+    
+    currentDate = [currentDate stringByReplacingOccurrencesOfString:@"/"
+                                         withString:@"-"];
+    //currentTime = [currentTime stringByReplacingOccurrencesOfString:@"/"
+                                                         //withString:@"-"];
     
     //UIImage *resizedImage = self.capturedImage;
     RCImage* capturedImage = [[RCImage alloc] init];
     capturedImage.primaryImage = self.capturedImage;
     NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
-    //NSString *lat = [latAndLong objectForKey:@"lat"];
-    //NSString *lng =[latAndLong objectForKey:@"lng"];
     capturedImage.takenLat = [latAndLong objectForKey:@"lat"];
     capturedImage.takenLng = [latAndLong objectForKey:@"lng"];
+    capturedImage.takenDate = currentDate;
+    capturedImage.recipients = [[User currentUser] returnActiveRecepients];
+    
+    if(![[User currentUser] FRIsActivated])
+    {
+       self.currentImage = capturedImage;
+        [self saveRCImage];
+    }
+    
+    else{
     __block RCImage* detectedImage;
     
     dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -403,29 +445,69 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         //detectedImage = [self markFaces:resizedImage];
         detectedImage = [self markFaces:capturedImage];
         dispatch_async( dispatch_get_main_queue(), ^{
-            NSLog(@"detected faces in image");
+            //NSLog(@"detected faces in image");
         });
     });
     
+    /*
     dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"about to send picture");
-        [self.client take_pics:detectedImage.primaryImage withUserID:self.userId withUserName:self.userName withLat:detectedImage.takenLat withLng:detectedImage.takenLng];
-        
+        //[self.client take_pics:detectedImage.primaryImage withUserID:self.userId withUserName:self.userName withLat:detectedImage.takenLat withLng:detectedImage.takenLng];
+        [self recognizeFaces];
         dispatch_async( dispatch_get_main_queue(), ^{
             NSLog(@"sent picture asynchronously");
         });
     });
-     
+    */
+    
+    NSLog(@"in recognize faces count is %lu", (unsigned long) detectedImage.faces.count);
+    
+    if (detectedImage.faces == nil || [detectedImage.faces count] == 0)
+    {
+        NSLog(@"array is empty");
+        self.currentImage = detectedImage;
+        [self saveRCImage];
+    }
+    else
+    {
+        self.currentImage = detectedImage;
+        self.currentImage.recognizedIDs = [[NSMutableArray alloc] init];
+        
+        for (int i=0; i< detectedImage.faces.count; i++)
+        {
+            [self.client recognize_image:detectedImage.faces[i] file_name:@"test.jpg" index:i];
+        }
+    }
+    }
+
+    //detectedImage.recognizedIDs = self.namesArray;
+    
+    //[[[User currentUser] returnStageQueue] addObject:detectedImage];
     
     //[self.client take_pics:resizedImage withUserID:self.userId withUserName:self.userName withLat:lat withLng:lng];
     
     //[self.imagesArray addObject:detectedImage];
-    [self.RCImagesArray addObject:detectedImage];
+    //[self.RCImagesArray addObject:detectedImage];
 }
+
+-(void)client:(ServerCalls *)serverCalls sendWithRecognizedNames:(NSString *)name index:(int)ind {
+    NSLog(@"inside sendWithRecognizedNames index is %d", ind);
+    [self.currentImage.recognizedIDs insertObject:name atIndex:ind];
+    if(ind == (self.currentImage.recognizedIDs.count-1))
+        [self saveRCImage];
+}
+
+-(void) saveRCImage
+{
+    NSLog(@"saving Image");
+    [[[User currentUser] returnStageQueue] addObject:self.currentImage];
+}
+
 
 - (UIImage *)imageByCroppingImage:(UIImage *)image withSize:(CGRect)bounds
 {
-    CGRect cropRect = CGRectMake(bounds.origin.x-50, bounds.origin.y-50, bounds.size.width+100, bounds.size.height+100);
+    //CGRect cropRect = CGRectMake(bounds.origin.x-50, bounds.origin.y-50, bounds.size.width+100, bounds.size.height+100);
+    CGRect cropRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
     
     UIImage *cropped = [UIImage imageWithCGImage:imageRef];
@@ -514,9 +596,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     // create an array containing all the detected faces from the detector
     NSArray* features = [detector featuresInImage:image
                                           options:@{CIDetectorImageOrientation:[NSNumber numberWithInt:exifOrientation]}];
-    NSLog(@"Number of faces detected in image is %lu", (unsigned long)features.count);
-    NSLog(@"Image [width, height] is %f, %f",facePicture.primaryImage.size.width, facePicture.primaryImage.size.height);
-    self.facesArray = [[NSMutableArray alloc] init];
+    //NSLog(@"Image [width, height] is %f, %f",facePicture.primaryImage.size.width, facePicture.primaryImage.size.height);
+    //self.facesArray = [[NSMutableArray alloc] init];
+    facePicture.faces = [[NSMutableArray alloc] init];
     facePicture.facesBoxes = [[NSMutableArray alloc] init];
     
     for(CIFaceFeature* faceFeature in features)
@@ -596,15 +678,34 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             rectBound = CGRectMake(x, y, width, height);
         }
         
-        NSLog(@"Orientation is %d and [x, y, width, height] is %f, %f, %f, %f",exifOrientation,x,y,width,height);
         
-        [self.facesArray addObject:[self imageByCroppingImage:facePicture.primaryImage withSize:rectBound]];
+        //[self.facesArray addObject:[self imageByCroppingImage:facePicture.primaryImage withSize:faceFeature.bounds]];
+      
+        [facePicture.faces addObject:[self imageByCroppingImage:facePicture.primaryImage withSize:faceFeature.bounds]];
         [facePicture.facesBoxes addObject:[NSValue valueWithCGRect:rectBound]];
         //facePicture.primaryImage = [self imageWithRect:facePicture.primaryImage withSize:rectBound];
         
     }
     
     return facePicture;
+}
+- (void) recognizeFaces
+{
+    NSLog(@"in recognize faces count is %lu", (unsigned long) self.facesArray.count);
+    
+    
+    
+    if (self.facesArray == nil || [self.facesArray count] == 0) {
+        NSLog(@"array is empty");
+    }
+    else
+    {
+        
+        for (int i=0; i< self.facesArray.count; i++)
+        {
+            [self.client recognize_image:self.facesArray[i] file_name:@"test.jpg" index:i];
+        }
+    }
 }
 
 - (IBAction)addFriend:(id)sender {
@@ -653,15 +754,21 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     if ([[segue identifier] isEqualToString:@"detectFaces"])
     {
+        /*
         TestDetectViewController *TDVC = [segue destinationViewController];
         [TDVC setCapturedImage:self.capturedImage];
+        [TDVC setFaces:self.facesArray];
+        */
+        
+        TestFacesTableViewController *TFTVC = [segue destinationViewController];
+        [TFTVC setFaces:self.facesArray];
     }
     
     else if ([[segue identifier] isEqualToString:@"SeePictures"])
     {
-        AllPicsViewController *APVC = [segue destinationViewController];
-        [APVC setImagesArray:self.imagesArray];
-        [APVC setImagesLocation:self.imagesLocation];
+        DisplayOptionsTableController *DOTC = [segue destinationViewController];
+        //[APVC setImagesArray:self.imagesArray];
+        //[APVC setImagesLocation:self.imagesLocation];
     }
     else if ([[segue identifier] isEqualToString:@"addFriend"])
     {

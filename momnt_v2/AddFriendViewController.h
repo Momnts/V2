@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ServerCalls.h"
+#import "User.h"
 
 @interface AddFriendViewController : UIViewController <UITextFieldDelegate>
 

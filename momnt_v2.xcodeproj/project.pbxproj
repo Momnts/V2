@@ -44,6 +44,18 @@
 		412AAEB81ADB32E100FC9DC4 /* currentUser.plist in Resources */ = {isa = PBXBuildFile; fileRef = 412AAEB71ADB32E100FC9DC4 /* currentUser.plist */; };
 		416699341AF9C88A00B3B9C5 /* FriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 416699331AF9C88A00B3B9C5 /* FriendList.m */; };
 		416699371AF9D68200B3B9C5 /* friendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 416699361AF9D68200B3B9C5 /* friendCell.m */; };
+		41785B321B034B3800313A03 /* SendFriendsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41785B311B034B3800313A03 /* SendFriendsTableController.m */; };
+		41785B351B034B7100313A03 /* SendFriendTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41785B341B034B7100313A03 /* SendFriendTableCell.m */; };
+		41785B381B04734D00313A03 /* ActivateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 41785B371B04734D00313A03 /* ActivateButton.m */; };
+		41785B3B1B04842400313A03 /* Activations.m in Sources */ = {isa = PBXBuildFile; fileRef = 41785B3A1B04842400313A03 /* Activations.m */; };
+		4184688D1B06A492008B5BE5 /* ActivateFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4184688C1B06A492008B5BE5 /* ActivateFriendsViewController.m */; };
+		418468901B072074008B5BE5 /* DisplayOptionsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4184688F1B072074008B5BE5 /* DisplayOptionsTableController.m */; };
+		418468921B07498D008B5BE5 /* appbar.power.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468911B07498D008B5BE5 /* appbar.power.png */; };
+		418468941B074B09008B5BE5 /* appbar.image.multiple.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468931B074B09008B5BE5 /* appbar.image.multiple.png */; };
+		418468961B074BDD008B5BE5 /* appbar.user.add.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468951B074BDD008B5BE5 /* appbar.user.add.png */; };
+		418468981B074E4A008B5BE5 /* appbar.rocket.rotated.45.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468971B074E4A008B5BE5 /* appbar.rocket.rotated.45.png */; };
+		4184689A1B074F4A008B5BE5 /* appbar.refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468991B074F4A008B5BE5 /* appbar.refresh.png */; };
+		4184689C1B08382E008B5BE5 /* logo_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 4184689B1B08382E008B5BE5 /* logo_transparent.png */; };
 		41AA467E1ACE5EF10095349A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA467D1ACE5EF10095349A /* main.m */; };
 		41AA46811ACE5EF10095349A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46801ACE5EF10095349A /* AppDelegate.m */; };
 		41AA46841ACE5EF20095349A /* momnt_v2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46821ACE5EF20095349A /* momnt_v2.xcdatamodeld */; };
@@ -156,6 +168,24 @@
 		416699331AF9C88A00B3B9C5 /* FriendList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendList.m; sourceTree = "<group>"; };
 		416699351AF9D68200B3B9C5 /* friendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friendCell.h; sourceTree = "<group>"; };
 		416699361AF9D68200B3B9C5 /* friendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = friendCell.m; sourceTree = "<group>"; };
+		41785B301B034B3800313A03 /* SendFriendsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendFriendsTableController.h; sourceTree = "<group>"; };
+		41785B311B034B3800313A03 /* SendFriendsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendFriendsTableController.m; sourceTree = "<group>"; };
+		41785B331B034B7100313A03 /* SendFriendTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendFriendTableCell.h; sourceTree = "<group>"; };
+		41785B341B034B7100313A03 /* SendFriendTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendFriendTableCell.m; sourceTree = "<group>"; };
+		41785B361B04734D00313A03 /* ActivateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivateButton.h; sourceTree = "<group>"; };
+		41785B371B04734D00313A03 /* ActivateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivateButton.m; sourceTree = "<group>"; };
+		41785B391B04842400313A03 /* Activations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activations.h; sourceTree = "<group>"; };
+		41785B3A1B04842400313A03 /* Activations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activations.m; sourceTree = "<group>"; };
+		4184688B1B06A492008B5BE5 /* ActivateFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivateFriendsViewController.h; sourceTree = "<group>"; };
+		4184688C1B06A492008B5BE5 /* ActivateFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivateFriendsViewController.m; sourceTree = "<group>"; };
+		4184688E1B072074008B5BE5 /* DisplayOptionsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayOptionsTableController.h; sourceTree = "<group>"; };
+		4184688F1B072074008B5BE5 /* DisplayOptionsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayOptionsTableController.m; sourceTree = "<group>"; };
+		418468911B07498D008B5BE5 /* appbar.power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appbar.power.png; path = momnt_v2/appbar.power.png; sourceTree = "<group>"; };
+		418468931B074B09008B5BE5 /* appbar.image.multiple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appbar.image.multiple.png; sourceTree = "<group>"; };
+		418468951B074BDD008B5BE5 /* appbar.user.add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appbar.user.add.png; sourceTree = "<group>"; };
+		418468971B074E4A008B5BE5 /* appbar.rocket.rotated.45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appbar.rocket.rotated.45.png; sourceTree = "<group>"; };
+		418468991B074F4A008B5BE5 /* appbar.refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appbar.refresh.png; sourceTree = "<group>"; };
+		4184689B1B08382E008B5BE5 /* logo_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_transparent.png; sourceTree = "<group>"; };
 		41AA46781ACE5EF10095349A /* momnt_v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = momnt_v2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41AA467C1ACE5EF10095349A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41AA467D1ACE5EF10095349A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -307,15 +337,21 @@
 			children = (
 				4106655C1AE72AD2005E75E4 /* CoreLocation.framework */,
 				410C5A611AE321F00065F9B8 /* picture65.png */,
+				418468991B074F4A008B5BE5 /* appbar.refresh.png */,
 				410C5A621AE321F00065F9B8 /* power86.png */,
+				4184689B1B08382E008B5BE5 /* logo_transparent.png */,
 				410BACC51ADB4B99001996B4 /* rotate_camera.png */,
 				412AAEB21AD9BD8A00FC9DC4 /* suncity.jpg */,
+				418468931B074B09008B5BE5 /* appbar.image.multiple.png */,
+				418468951B074BDD008B5BE5 /* appbar.user.add.png */,
 				412AAEB01AD9AD4D00FC9DC4 /* blindingLights.jpg */,
 				412AAE931AD98D5100FC9DC4 /* UIKit+AFNetworking */,
 				412AAE761AD98D3A00FC9DC4 /* AFNetworking */,
 				412AAE741AD981B900FC9DC4 /* momnts_signin.jpg */,
 				412AAE701AD8EA3300FC9DC4 /* page1a.png */,
 				412AAE681AD8606000FC9DC4 /* page1.png */,
+				418468971B074E4A008B5BE5 /* appbar.rocket.rotated.45.png */,
+				418468911B07498D008B5BE5 /* appbar.power.png */,
 				412AAE691AD8606000FC9DC4 /* page2.png */,
 				412AAE6A1AD8606000FC9DC4 /* page3.png */,
 				412AAE6B1AD8606000FC9DC4 /* page4.png */,
@@ -355,6 +391,8 @@
 				410665591AE72AAB005E75E4 /* Locater.h */,
 				4106655A1AE72AAB005E75E4 /* Locater.m */,
 				412AAEB41AD9FDD100FC9DC4 /* Main.storyboard */,
+				4184688E1B072074008B5BE5 /* DisplayOptionsTableController.h */,
+				4184688F1B072074008B5BE5 /* DisplayOptionsTableController.m */,
 				41E267951AF7142E004069CE /* ShareImgCell.h */,
 				41E267961AF7142E004069CE /* ShareImgCell.m */,
 				41E267921AF709C2004069CE /* AddFriendViewController.h */,
@@ -392,6 +430,16 @@
 				41AA46A81ACF4E790095349A /* TrainCaptureViewController.m */,
 				41AA46AA1ACF4E9C0095349A /* TestCaptureViewController.h */,
 				41AA46AB1ACF4E9C0095349A /* TestCaptureViewController.m */,
+				41785B301B034B3800313A03 /* SendFriendsTableController.h */,
+				41785B311B034B3800313A03 /* SendFriendsTableController.m */,
+				4184688B1B06A492008B5BE5 /* ActivateFriendsViewController.h */,
+				4184688C1B06A492008B5BE5 /* ActivateFriendsViewController.m */,
+				41785B391B04842400313A03 /* Activations.h */,
+				41785B3A1B04842400313A03 /* Activations.m */,
+				41785B361B04734D00313A03 /* ActivateButton.h */,
+				41785B371B04734D00313A03 /* ActivateButton.m */,
+				41785B331B034B7100313A03 /* SendFriendTableCell.h */,
+				41785B341B034B7100313A03 /* SendFriendTableCell.m */,
 				41BD7A2E1AFB452600A5170E /* User.h */,
 				41BD7A2F1AFB452600A5170E /* User.m */,
 				41E2678F1AF701CD004069CE /* RCImage.h */,
@@ -486,6 +534,7 @@
 				TargetAttributes = {
 					41AA46771ACE5EF10095349A = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 29S4B9YBSU;
 					};
 					41AA46931ACE5EF20095349A = {
 						CreatedOnToolsVersion = 6.2;
@@ -521,16 +570,22 @@
 				412AAEB81ADB32E100FC9DC4 /* currentUser.plist in Resources */,
 				412AAE6E1AD8606000FC9DC4 /* page3.png in Resources */,
 				412AAEB11AD9AD4D00FC9DC4 /* blindingLights.jpg in Resources */,
+				418468921B07498D008B5BE5 /* appbar.power.png in Resources */,
 				412AAEB31AD9BD8A00FC9DC4 /* suncity.jpg in Resources */,
 				412AAE6F1AD8606000FC9DC4 /* page4.png in Resources */,
 				412AAEB61AD9FDD100FC9DC4 /* Main.storyboard in Resources */,
+				4184689A1B074F4A008B5BE5 /* appbar.refresh.png in Resources */,
 				412AAE711AD8EA3300FC9DC4 /* page1a.png in Resources */,
 				410BACC61ADB4B99001996B4 /* rotate_camera.png in Resources */,
+				418468941B074B09008B5BE5 /* appbar.image.multiple.png in Resources */,
 				412AAE751AD981B900FC9DC4 /* momnts_signin.jpg in Resources */,
+				4184689C1B08382E008B5BE5 /* logo_transparent.png in Resources */,
 				412AAE6C1AD8606000FC9DC4 /* page1.png in Resources */,
 				410C5A641AE321F00065F9B8 /* power86.png in Resources */,
+				418468981B074E4A008B5BE5 /* appbar.rocket.rotated.45.png in Resources */,
 				41AA468C1ACE5EF20095349A /* Images.xcassets in Resources */,
 				412AAE6D1AD8606000FC9DC4 /* page2.png in Resources */,
+				418468961B074BDD008B5BE5 /* appbar.user.add.png in Resources */,
 				410C5A631AE321F00065F9B8 /* picture65.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +608,7 @@
 				41AA46811ACE5EF10095349A /* AppDelegate.m in Sources */,
 				416699341AF9C88A00B3B9C5 /* FriendList.m in Sources */,
 				4106655B1AE72AAB005E75E4 /* Locater.m in Sources */,
+				41785B381B04734D00313A03 /* ActivateButton.m in Sources */,
 				412AAEA81AD98D5100FC9DC4 /* UIButton+AFNetworking.m in Sources */,
 				41AA46AF1ACF4EB70095349A /* TrainSaveViewController.m in Sources */,
 				412AAEAC1AD98D5100FC9DC4 /* UIWebView+AFNetworking.m in Sources */,
@@ -568,7 +624,9 @@
 				41E267971AF7142E004069CE /* ShareImgCell.m in Sources */,
 				412AAE8D1AD98D3A00FC9DC4 /* AFNetworkReachabilityManager.m in Sources */,
 				412AAE8A1AD98D3A00FC9DC4 /* AFHTTPRequestOperation.m in Sources */,
+				418468901B072074008B5BE5 /* DisplayOptionsTableController.m in Sources */,
 				412AAE901AD98D3A00FC9DC4 /* AFURLRequestSerialization.m in Sources */,
+				4184688D1B06A492008B5BE5 /* ActivateFriendsViewController.m in Sources */,
 				412AAE8F1AD98D3A00FC9DC4 /* AFURLConnectionOperation.m in Sources */,
 				412AAE921AD98D3A00FC9DC4 /* AFURLSessionManager.m in Sources */,
 				41AA46DA1ACF608C0095349A /* TestDetectViewController.m in Sources */,
@@ -577,6 +635,8 @@
 				410C5A601AE318E00065F9B8 /* PicsCollectionViewCell.m in Sources */,
 				41AA46841ACE5EF20095349A /* momnt_v2.xcdatamodeld in Sources */,
 				41AA467E1ACE5EF10095349A /* main.m in Sources */,
+				41785B321B034B3800313A03 /* SendFriendsTableController.m in Sources */,
+				41785B3B1B04842400313A03 /* Activations.m in Sources */,
 				412AAEAF1AD9A73D00FC9DC4 /* SignUpViewController.m in Sources */,
 				41AA46A91ACF4E790095349A /* TrainCaptureViewController.m in Sources */,
 				41AA46A61ACF4E560095349A /* HomeViewController.m in Sources */,
@@ -591,6 +651,7 @@
 				412AAE8B1AD98D3A00FC9DC4 /* AFHTTPRequestOperationManager.m in Sources */,
 				41D968B31AD7ACED00E30B46 /* LoginViewController.m in Sources */,
 				412AAE911AD98D3A00FC9DC4 /* AFURLResponseSerialization.m in Sources */,
+				41785B351B034B7100313A03 /* SendFriendTableCell.m in Sources */,
 				412AAEA51AD98D5100FC9DC4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

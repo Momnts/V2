@@ -130,7 +130,9 @@
         NSLog(@"array is empty");
         
     }
-    [client recognize_image:self.faces file_name:@"test.jpg"];
+    
+    //COMMENT IT OUT
+    //[client recognize_image:self.faces file_name:@"test.jpg"];
 }
 
 -(void)client:(ServerCalls *)serverCalls sendWithNames:(NSMutableArray *)names {
