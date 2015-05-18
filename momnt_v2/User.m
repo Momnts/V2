@@ -7,6 +7,8 @@
 //
 
 #import "User.h"
+#import "Activations.h"
+#import "UnsignedActivation.h"
 
 @implementation User
 

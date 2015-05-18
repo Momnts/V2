@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "ServerCalls.h"
-#import "Activations.h"
-#import "UnsignedActivation.h"
+//#import "Activations.h"
+//#import "UnsignedActivation.h"
 
-//@class Activations;
-//@class UnsignedActivation;
+@class Activations;
+@class UnsignedActivation;
 
 @interface User : NSObject <ServerCallsDelegate>
 

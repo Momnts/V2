@@ -7,6 +7,8 @@
 //
 
 #import "ActivateFriendsViewController.h"
+#import "Activations.h"
+#import "UnsignedActivation.h"
 
 @interface ActivateFriendsViewController ()
 

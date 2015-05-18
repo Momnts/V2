@@ -14,6 +14,7 @@
 #import "ActivateButton.h"
 //#import "Activations.h"
 //#import "UnsignedActivation.h"
+
 @class Activations;
 @class UnsignedActivation;
 
@@ -22,9 +23,10 @@
 @property (strong, nonatomic) IBOutlet UISwitch *activateFRButton;
 @property (strong, nonatomic) IBOutlet UIButton *CameraButton;
 @property (strong, nonatomic) IBOutlet UILabel *FRLabl;
+@property (strong, nonatomic) IBOutlet UIButton *addNewContact;
+
 - (IBAction)goBack:(id)sender;
 - (IBAction)FRActivated:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *addNewContact;
 - (IBAction)addingContact:(id)sender;
 
 
