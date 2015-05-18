@@ -12,8 +12,10 @@
 #import "User.h"
 #import "SendFriendTableCell.h"
 #import "ActivateButton.h"
-#import "Activations.h"
-#import "UnsignedActivation.h"
+//#import "Activations.h"
+//#import "UnsignedActivation.h"
+@class Activations;
+@class UnsignedActivation;
 
 @interface ActivateFriendsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *ListFriendsView;

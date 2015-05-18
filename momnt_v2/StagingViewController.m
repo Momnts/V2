@@ -73,7 +73,7 @@
         RCImage *image = stageQueue[i];
         NSMutableDictionary *metadataEntry = [[NSMutableDictionary alloc] init];
         [metadataEntry setValue:[imagesID objectAtIndex:i] forKey:@"photoId"];
-        [metadataEntry setValue:[[User currentUser] returnUserName] forKey:@"username"];
+        [metadataEntry setValue:[[User currentUser] returnUserID] forKey:@"username"];
         [metadataEntry setValue:image.takenLat forKey:@"lat"];
         [metadataEntry setValue:image.takenLng forKey:@"lng"];
         [metadataEntry setValue:image.takenDate forKey:@"date"];

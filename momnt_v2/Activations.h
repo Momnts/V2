@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Naren Sathiya. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
 #import "ActivateButton.h"
 #import "User.h"
 #import "SendFriendTableCell.h"

@@ -8,6 +8,7 @@
 
 #import "Activations.h"
 
+
 #define TIMER_STEP .1
 #define DEGREES_TO_RADIANS(degrees)  ((3.14159265359 * degrees)/ 180)
 

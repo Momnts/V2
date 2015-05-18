@@ -11,6 +11,9 @@
 #import "Activations.h"
 #import "UnsignedActivation.h"
 
+//@class Activations;
+//@class UnsignedActivation;
+
 @interface User : NSObject <ServerCallsDelegate>
 
 + (User*) currentUser;
