@@ -55,12 +55,12 @@
     
     ///////////////////////////////////////////////////////////////////////////////////////////////
     
-    [self.navigationController setNavigationBarHidden:YES];
+   
     UIGraphicsBeginImageContext(self.view.frame.size);
     [[UIImage imageNamed:@"momnts_signin.jpg"] drawInRect:self.view.bounds];
     UIImage* backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    self.view.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+    self.view.backgroundColor = [UIColor colorWithRed:28.0f green:28.0f blue:28.0f alpha:0.0f]; //[UIColor colorWithPatternImage:backgroundImage];
     
     //self.username.placeholder = @"email";
     self.username.backgroundColor = [UIColor clearColor];
@@ -92,6 +92,11 @@
     self.password.tag = 2;
     self.password.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.password.delegate = self;
+    
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
     
 }
 

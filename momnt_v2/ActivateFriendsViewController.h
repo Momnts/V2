@@ -13,6 +13,7 @@
 #import "SendFriendTableCell.h"
 #import "ActivateButton.h"
 #import "Activations.h"
+#import "UnsignedActivation.h"
 
 @interface ActivateFriendsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *ListFriendsView;
@@ -29,5 +30,6 @@
 @property User *currentUser;
 @property NSMutableArray *friendsList;
 @property NSMutableArray *activeFriends;
+@property NSMutableArray *activeEmails;
 
 @end

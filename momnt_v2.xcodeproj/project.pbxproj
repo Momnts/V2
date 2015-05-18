@@ -56,6 +56,7 @@
 		418468981B074E4A008B5BE5 /* appbar.rocket.rotated.45.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468971B074E4A008B5BE5 /* appbar.rocket.rotated.45.png */; };
 		4184689A1B074F4A008B5BE5 /* appbar.refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 418468991B074F4A008B5BE5 /* appbar.refresh.png */; };
 		4184689C1B08382E008B5BE5 /* logo_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 4184689B1B08382E008B5BE5 /* logo_transparent.png */; };
+		4184689F1B09494C008B5BE5 /* UnsignedActivation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4184689E1B09494C008B5BE5 /* UnsignedActivation.m */; };
 		41AA467E1ACE5EF10095349A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA467D1ACE5EF10095349A /* main.m */; };
 		41AA46811ACE5EF10095349A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46801ACE5EF10095349A /* AppDelegate.m */; };
 		41AA46841ACE5EF20095349A /* momnt_v2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41AA46821ACE5EF20095349A /* momnt_v2.xcdatamodeld */; };
@@ -186,6 +187,8 @@
 		418468971B074E4A008B5BE5 /* appbar.rocket.rotated.45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appbar.rocket.rotated.45.png; sourceTree = "<group>"; };
 		418468991B074F4A008B5BE5 /* appbar.refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appbar.refresh.png; sourceTree = "<group>"; };
 		4184689B1B08382E008B5BE5 /* logo_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_transparent.png; sourceTree = "<group>"; };
+		4184689D1B09494C008B5BE5 /* UnsignedActivation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnsignedActivation.h; sourceTree = "<group>"; };
+		4184689E1B09494C008B5BE5 /* UnsignedActivation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnsignedActivation.m; sourceTree = "<group>"; };
 		41AA46781ACE5EF10095349A /* momnt_v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = momnt_v2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41AA467C1ACE5EF10095349A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41AA467D1ACE5EF10095349A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -391,6 +394,8 @@
 				410665591AE72AAB005E75E4 /* Locater.h */,
 				4106655A1AE72AAB005E75E4 /* Locater.m */,
 				412AAEB41AD9FDD100FC9DC4 /* Main.storyboard */,
+				4184689D1B09494C008B5BE5 /* UnsignedActivation.h */,
+				4184689E1B09494C008B5BE5 /* UnsignedActivation.m */,
 				4184688E1B072074008B5BE5 /* DisplayOptionsTableController.h */,
 				4184688F1B072074008B5BE5 /* DisplayOptionsTableController.m */,
 				41E267951AF7142E004069CE /* ShareImgCell.h */,
@@ -630,6 +635,7 @@
 				412AAE8F1AD98D3A00FC9DC4 /* AFURLConnectionOperation.m in Sources */,
 				412AAE921AD98D3A00FC9DC4 /* AFURLSessionManager.m in Sources */,
 				41AA46DA1ACF608C0095349A /* TestDetectViewController.m in Sources */,
+				4184689F1B09494C008B5BE5 /* UnsignedActivation.m in Sources */,
 				412AAEA61AD98D5100FC9DC4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				41AA46B21ACF4ED80095349A /* TestFacesTableViewController.m in Sources */,
 				410C5A601AE318E00065F9B8 /* PicsCollectionViewCell.m in Sources */,

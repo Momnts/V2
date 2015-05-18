@@ -322,7 +322,7 @@
                                     <action selector="logOff:" destination="N2w-dO-FpJ" eventType="touchDown" id="YZp-Di-KAu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aaG-cK-VYo">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aaG-cK-VYo">
                                 <rect key="frame" x="236" y="196" width="68" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="6kC-7w-dN8"/>
@@ -333,19 +333,6 @@
                                 </state>
                                 <connections>
                                     <action selector="addFriend:" destination="N2w-dO-FpJ" eventType="touchDown" id="Y6Z-eN-aIj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQq-Ds-Pfc">
-                                <rect key="frame" x="264" y="269" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="LHF-lr-mAg"/>
-                                    <constraint firstAttribute="height" constant="50" id="OBp-HX-nWy"/>
-                                </constraints>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="shareNow:" destination="N2w-dO-FpJ" eventType="touchDown" id="0I3-Gg-W2h"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y91-zT-79S">
@@ -362,7 +349,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBD-Ff-2N9">
-                                <rect key="frame" x="236" y="66" width="68" height="50"/>
+                                <rect key="frame" x="16" y="510" width="68" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="YJx-51-kse"/>
                                     <constraint firstAttribute="height" constant="50" id="uko-t8-n4T"/>
@@ -375,22 +362,34 @@
                                     <action selector="seePictures:" destination="N2w-dO-FpJ" eventType="touchDown" id="7Ti-0O-qhs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQq-Ds-Pfc">
+                                <rect key="frame" x="265" y="520" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="LHF-lr-mAg"/>
+                                    <constraint firstAttribute="height" constant="60" id="OBp-HX-nWy"/>
+                                </constraints>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareNow:" destination="N2w-dO-FpJ" eventType="touchDown" id="0I3-Gg-W2h"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="D7I-XR-R2s" firstAttribute="leading" secondItem="1lY-oj-RAT" secondAttribute="leadingMargin" id="AKQ-je-OlZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="oQq-Ds-Pfc" secondAttribute="trailing" constant="10" id="MBE-F4-vzk"/>
-                            <constraint firstItem="kBD-Ff-2N9" firstAttribute="trailing" secondItem="1lY-oj-RAT" secondAttribute="trailingMargin" id="SlM-5f-hSS"/>
-                            <constraint firstItem="kBD-Ff-2N9" firstAttribute="top" secondItem="0WW-mn-jXx" secondAttribute="bottom" constant="25" id="SmE-cK-fHE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oQq-Ds-Pfc" secondAttribute="trailing" id="MBE-F4-vzk"/>
                             <constraint firstItem="L05-L8-5zS" firstAttribute="top" secondItem="X0N-zA-Ybp" secondAttribute="bottom" constant="20" id="b6Q-rZ-AVc"/>
+                            <constraint firstItem="L05-L8-5zS" firstAttribute="top" secondItem="kBD-Ff-2N9" secondAttribute="bottom" constant="5" id="eAq-mC-XgS"/>
                             <constraint firstItem="D7I-XR-R2s" firstAttribute="top" secondItem="jL7-BR-VwP" secondAttribute="bottom" id="fc0-mA-jKn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="X0N-zA-Ybp" secondAttribute="trailing" constant="130" id="giV-qv-uzN"/>
                             <constraint firstItem="0WW-mn-jXx" firstAttribute="trailing" secondItem="1lY-oj-RAT" secondAttribute="trailingMargin" id="gln-9j-PYP"/>
-                            <constraint firstItem="oQq-Ds-Pfc" firstAttribute="top" secondItem="aaG-cK-VYo" secondAttribute="bottom" constant="25" id="kEC-ZX-XX7"/>
-                            <constraint firstItem="0WW-mn-jXx" firstAttribute="top" secondItem="jL7-BR-VwP" secondAttribute="bottom" constant="10" id="nUZ-RR-gFi"/>
+                            <constraint firstItem="L05-L8-5zS" firstAttribute="top" secondItem="oQq-Ds-Pfc" secondAttribute="bottom" constant="5" id="kbI-ic-nE3"/>
+                            <constraint firstItem="kBD-Ff-2N9" firstAttribute="leading" secondItem="1lY-oj-RAT" secondAttribute="leadingMargin" id="krt-Ed-nwb"/>
+                            <constraint firstItem="0WW-mn-jXx" firstAttribute="top" secondItem="jL7-BR-VwP" secondAttribute="bottom" id="nUZ-RR-gFi"/>
                             <constraint firstItem="aaG-cK-VYo" firstAttribute="trailing" secondItem="1lY-oj-RAT" secondAttribute="trailingMargin" id="pSx-4H-Ptd"/>
-                            <constraint firstItem="aaG-cK-VYo" firstAttribute="top" secondItem="kBD-Ff-2N9" secondAttribute="bottom" constant="22" id="qwd-kL-b4V"/>
                             <constraint firstAttribute="centerX" secondItem="Y91-zT-79S" secondAttribute="centerX" id="xVX-W3-ngh"/>
                         </constraints>
                     </view>
@@ -429,12 +428,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zU9-h3-1Q9">
-                                <rect key="frame" x="11" y="220" width="293" height="30"/>
+                                <rect key="frame" x="14" y="108" width="293" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EtI-sn-vAI">
-                                <rect key="frame" x="145" y="269" width="30" height="30"/>
+                                <rect key="frame" x="145" y="146" width="30" height="30"/>
                                 <state key="normal" title="Add">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -442,11 +441,26 @@
                                     <action selector="addFriend:" destination="7X7-Aw-vJl" eventType="touchDown" id="YIm-mi-s3e"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cox-BC-lKQ">
+                                <rect key="frame" x="145" y="235" width="30" height="30"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addEmail:" destination="7X7-Aw-vJl" eventType="touchDown" id="hq4-Uh-IiJ"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1g5-cn-wNa">
+                                <rect key="frame" x="14" y="197" width="293" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="IcN-gk-1Ll"/>
                     <connections>
+                        <outlet property="inputEmail" destination="1g5-cn-wNa" id="oid-FI-byP"/>
                         <outlet property="inputFriend" destination="zU9-h3-1Q9" id="85g-v5-UeD"/>
                     </connections>
                 </viewController>
@@ -855,7 +869,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="MHq-Wq-m4r"/>
         <segue reference="4hG-Cd-A5T"/>
-        <segue reference="gFr-sY-7ct"/>
     </inferredMetricsTieBreakers>
 </document>

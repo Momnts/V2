@@ -81,6 +81,7 @@
         NSMutableDictionary* FriendIDMap = [[User currentUser] returnFriendsIDMap];
         NSMutableArray *recepients = [[NSMutableArray alloc] init];
         NSMutableArray *dwellers = [[NSMutableArray alloc] init];
+        NSMutableArray *emailRecipients = [[NSMutableArray alloc] init];
         
         for (int j = 0; j<[image.recipients count]; j++)
         {
@@ -106,9 +107,18 @@
         else
             [metadataEntry setObject:dwellers forKey:@"dwellers"];
         
-        //[metadataEntry setObject:@[@"2", @"4"] forKey:@"dwellers"];
+        for (int j = 0; j<[image.emailRecipients count]; j++)
+        {
+            UnsignedActivation *em = [image.emailRecipients objectAtIndex:j];
+             NSLog(@"in picture %d, email is %@", i,em.email );
+            [emailRecipients addObject:em.email];
+            //NSLog(@"in picture %d, face recognized is %@", i,[FriendIDMap objectForKey:image.recognizedIDs] );
+        }
         
-        [metadataEntry setObject:@[@"naren@uci.edu", @"narensathiya92@gmail.com"] forKey:@"emailRecipients"];
+        if(emailRecipients.count == 0)
+            [metadataEntry setObject:@"" forKey:@"emailRecipients"];
+        else
+            [metadataEntry setObject:emailRecipients forKey:@"emailRecipients"];
         
         [metaData addObject:metadataEntry];
     }

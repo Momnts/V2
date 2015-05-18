@@ -18,6 +18,7 @@
 @property NSString *takenTime;
 @property NSString *takenDate;
 @property NSMutableArray *recipients;
+@property NSMutableArray *emailRecipients;
 @property NSMutableArray *recognizedIDs;
 
 @end

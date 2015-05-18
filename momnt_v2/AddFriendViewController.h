@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *inputFriend;
 - (IBAction)addFriend:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextField *inputEmail;
+- (IBAction)addEmail:(id)sender;
 
 @property ServerCalls *client;
 @property NSString *userName;

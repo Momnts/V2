@@ -430,6 +430,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     capturedImage.takenLng = [latAndLong objectForKey:@"lng"];
     capturedImage.takenDate = currentDate;
     capturedImage.recipients = [[User currentUser] returnActiveRecepients];
+    capturedImage.emailRecipients = [[User currentUser] returnActiveEmailRecepients];
     
     if(![[User currentUser] FRIsActivated])
     {

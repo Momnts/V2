@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ServerCalls.h"
 #import "Activations.h"
+#import "UnsignedActivation.h"
 
 @interface User : NSObject <ServerCallsDelegate>
 
@@ -26,6 +27,13 @@
 - (void) activateFR;
 - (void) deactivateFR;
 - (BOOL) FRIsActivated;
+
+- (NSMutableArray*) returnEmailRecepients;
+- (NSMutableArray*) returnActiveEmailRecepients;
+- (NSInteger*) returnActiveEmailRecepientsCount;
+- (void) addEmailRecepient: (NSString*)email;
+- (void) emptyEmailRecepient: (NSString*)email;
+
 
 
 

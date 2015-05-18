@@ -13,6 +13,7 @@
 @property float currentAngle;
 @property UIBezierPath* aPath;
 @property int activeState;
+@property NSInteger section;
 - (void) activate;
 - (void) deactivate;
 -(int) returnState;

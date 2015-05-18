@@ -13,6 +13,7 @@
 #import "FriendList.h"
 #import "ServerCalls.h"
 #import "Activations.h"
+#import "UnsignedActivation.h"
 
 @interface StagingViewController : UITableViewController
 

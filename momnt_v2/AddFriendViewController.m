@@ -21,9 +21,9 @@
     self.inputFriend.backgroundColor = [UIColor clearColor];
     self.inputFriend.textColor = [UIColor blackColor];
     self.inputFriend.font = [UIFont boldSystemFontOfSize:15.0f];
-    self.inputFriend.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:@"Input Friend's Username" attributes:@{NSForegroundColorAttributeName: [UIColor blackColor] }];
+    self.inputFriend.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:@"Input Username to Add" attributes:@{NSForegroundColorAttributeName: [UIColor blackColor] }];
     self.inputFriend.borderStyle = UITextBorderStyleRoundedRect;
-    self.inputFriend.layer.borderWidth = 2.0f;
+    self.inputFriend.layer.borderWidth = 0.5f;
     self.inputFriend.layer.borderColor = [[UIColor blackColor] CGColor];
     self.inputFriend.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.inputFriend.returnKeyType = UIReturnKeyDone;
@@ -32,6 +32,21 @@
     self.inputFriend.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.inputFriend.delegate = self;
     self.inputFriend.backgroundColor = [UIColor clearColor];
+    
+    self.inputEmail.backgroundColor = [UIColor clearColor];
+    self.inputEmail.textColor = [UIColor blackColor];
+    self.inputEmail.font = [UIFont boldSystemFontOfSize:15.0f];
+    self.inputEmail.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:@"Input Email to Add" attributes:@{NSForegroundColorAttributeName: [UIColor blackColor] }];
+    self.inputEmail.borderStyle = UITextBorderStyleRoundedRect;
+    self.inputEmail.layer.borderWidth = 0.5f;
+    self.inputEmail.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.inputEmail.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.inputEmail.returnKeyType = UIReturnKeyDone;
+    self.inputEmail.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.inputEmail.tag = 2;
+    self.inputEmail.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.inputEmail.delegate = self;
+    self.inputEmail.backgroundColor = [UIColor clearColor];
     
     self.client = [[ServerCalls alloc] init];
     self.client.delegate = self;
@@ -49,10 +64,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     if (textField.tag == 1) {
-        NSLog(@"friend needing to be added is %@", self.inputFriend.text);
-        [self.client addFriend:self.userName toUser:self.inputFriend.text];
-        
-        [self.view endEditing:YES];
+        [textField resignFirstResponder];
     }
     else {
         [textField resignFirstResponder];
@@ -115,5 +127,25 @@
         NSLog(@"friend needing to be added is %@", self.inputFriend.text);
         [self.client addFriend:self.userName toUser:self.inputFriend.text];
     }
+}
+- (IBAction)addEmail:(id)sender {
+    
+    
+    if ([self.inputEmail.text isEqualToString:@""]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"No Email Input"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else
+    {
+        NSLog(@"friend needing to be added is %@", self.inputEmail.text);
+         [[User currentUser] addEmailRecepient:self.inputEmail.text];
+        self.inputEmail.text = @"";
+    }
+    
 }
 @end

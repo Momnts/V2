@@ -29,7 +29,7 @@
     //CGFloat topLayoutGuide = self.topLayoutGuide.length;
     //self.ListFriendsView.contentInset = UIEdgeInsetsMake(topLayoutGuide, 0, 0, 0);
    
-    NSLog(@"sendfriendcontroller view did load");
+  
     self.ListFriendsView.dataSource = self;
     self.ListFriendsView.delegate = self;
     self.ListFriendsView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -38,7 +38,8 @@
     self.currentUser = [User currentUser];
     self.friendsList = [[User currentUser] returnFriendsList];
     self.activeFriends = [[User currentUser] returnRecepients];
-    
+    self.activeEmails = [[User currentUser] returnEmailRecepients];
+    NSLog(@"active emails is %lu", (unsigned long)[self.activeEmails count]);
     
 }
 
@@ -104,14 +105,23 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.friendsList count];
+    if(section == 0)
+        return [self.friendsList count];
+    else
+        return [self.activeEmails count];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if(section == 0)
+        return @"Friends";
+    else
+        return @"Emails";
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"FriendCell";
@@ -122,16 +132,30 @@
     }
     
     long row = [indexPath row];
-
+    long section = [indexPath section];
+    Activations *recepient;
     
-    cell.friendName.text = [self.friendsList objectAtIndex:row];
-    cell.friendName.textColor = [UIColor blackColor];
-    cell.backgroundColor = [UIColor whiteColor];
+    if(section == 0)
+    {
+        cell.friendName.text = [self.friendsList objectAtIndex:row];
+        cell.friendName.textColor = [UIColor blackColor];
+        cell.backgroundColor = [UIColor whiteColor];
     
-    Activations *recepient = [self.activeFriends objectAtIndex:row];
+        recepient = [self.activeFriends objectAtIndex:row];
+    }
+    else
+    {
+        UnsignedActivation *email = [self.activeEmails objectAtIndex:row];
+        cell.friendName.text = email.email;
+        cell.friendName.textColor = [UIColor blackColor];
+        cell.backgroundColor = [UIColor whiteColor];
+        
+        recepient = email;
+    }
     
     ActivateButton  *activeButton = [ActivateButton buttonWithType:UIButtonTypeCustom];
     activeButton.tag = [indexPath row];
+    activeButton.section = [indexPath section];
     [activeButton setTitle:@"" forState:UIControlStateNormal];
     [activeButton addTarget:self
                      action:@selector(friendActivated:)
@@ -142,37 +166,24 @@
     activeButton.layer.borderWidth = 2;
     activeButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [activeButton setBackgroundColor:[UIColor clearColor]];
-    /*
-     UIBezierPath* aPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(20, 20)
-     radius:20
-     startAngle:DEGREES_TO_RADIANS(0)
-     endAngle:DEGREES_TO_RADIANS(recepient.currentAngle)
-     clockwise:YES];
-     
-     [[UIColor redColor] setStroke];
-     aPath.lineWidth = 5;
-     [aPath stroke];
-     
-     
-     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-     shapeLayer.frame = activeButton.bounds;
-     shapeLayer.path = aPath.CGPath;
-     shapeLayer.fillColor = [UIColor clearColor].CGColor;
-     shapeLayer.strokeColor = [UIColor blackColor].CGColor;
-     shapeLayer.lineWidth = 4;
-     
-     [activeButton.layer addSublayer:shapeLayer];
-     */
+
+    
     recepient.Button = activeButton;
     
     if(!recepient.activated)
     {
-        NSLog(@"%@ is deactivated", recepient.username);
+        if ([recepient isMemberOfClass:[Activations class]])
+            NSLog(@"%@ is deactivated", recepient.username);
+        //else
+            //NSLog(@"%@ is deactivated", (UnsignedActivation*)recepient.email);
+        
         [recepient.Button deactivate];
     }
     else
     {
-        NSLog(@"%@ is activated", recepient.username);
+        //NSLog(@"%@ is activated", recepient.username);
+        if ([recepient isMemberOfClass:[Activations class]])
+            NSLog(@"%@ is activated", recepient.username);
         [recepient.Button activate];
     }
     
@@ -185,7 +196,11 @@
 - (void) friendActivated:(id) sender
 {
     ActivateButton *activeButton = (ActivateButton *) sender;
-    Activations *activations = [self.activeFriends objectAtIndex:activeButton.tag];
+    Activations *activations;
+    if(activeButton.section == 0)
+       activations = [self.activeFriends objectAtIndex:activeButton.tag];
+    else
+        activations = [self.activeEmails objectAtIndex:activeButton.tag];
     
     if(!activations.activated)
     {

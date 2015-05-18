@@ -18,6 +18,7 @@ NSString *username;
 NSString *userID;
 NSMutableArray *stageQueue;
 NSMutableArray *recepients;
+NSMutableArray *emailRecepients;
 bool FRActivation;
 
 + (User*) currentUser
@@ -38,6 +39,7 @@ bool FRActivation;
     username = un;
     userID = ID;
     FriendsList = [[NSMutableArray alloc] init];
+    emailRecepients = [[NSMutableArray alloc] init];
     stageQueue = [[NSMutableArray alloc]init]; //Save and retain from cache
     recepients = [[NSMutableArray alloc] init];
     FriendsIDMap = [[NSMutableDictionary alloc] init];
@@ -105,6 +107,10 @@ bool FRActivation;
 {
     return recepients;
 }
+- (NSMutableArray*) returnEmailRecepients
+{
+    return emailRecepients;
+}
 - (NSMutableDictionary*) returnFriendsIDMap
 {
     return FriendsIDMap;
@@ -123,10 +129,43 @@ bool FRActivation;
     }
     return recs;
 }
+
+- (NSMutableArray*) returnActiveEmailRecepients
+{
+    NSMutableArray *unsignedRecs = [[NSMutableArray alloc]init];
+    for (int i=0; i < emailRecepients.count; i++)
+    {
+        UnsignedActivation* rec = emailRecepients[i];
+        if(rec.activated)
+        {
+            NSLog(@"Active");
+            [unsignedRecs addObject:rec];
+        }
+    }
+    return unsignedRecs;
+}
 - (NSInteger*) returnActiveRecepientsCount
 {
     return (NSInteger*)[[self returnActiveRecepients] count];
 }
+
+- (NSInteger*) returnActiveEmailRecepientsCount
+{
+    return (NSInteger*)[[self returnActiveEmailRecepients] count];
+}
+
+-(void) addEmailRecepient: (NSString*)email
+{
+    UnsignedActivation *record = [[UnsignedActivation alloc] init];
+    record.email = email;
+    record.activated = false;
+    [emailRecepients addObject:record];
+}
+-(void) emptyEmailRecepient: (NSString*)email
+{
+    [emailRecepients removeAllObjects];
+}
+
 - (void) activateFR
 {
     FRActivation = 1;
