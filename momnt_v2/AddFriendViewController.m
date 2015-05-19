@@ -20,7 +20,7 @@
     
     self.inputFriend.backgroundColor = [UIColor clearColor];
     self.inputFriend.textColor = [UIColor blackColor];
-    self.inputFriend.font = [UIFont boldSystemFontOfSize:15.0f];
+    //self.inputFriend.font = [UIFont boldSystemFontOfSize:15.0f];
     self.inputFriend.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:@"Input Username to Add" attributes:@{NSForegroundColorAttributeName: [UIColor blackColor] }];
     self.inputFriend.borderStyle = UITextBorderStyleRoundedRect;
     self.inputFriend.layer.borderWidth = 0.5f;
@@ -32,10 +32,11 @@
     self.inputFriend.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.inputFriend.delegate = self;
     self.inputFriend.backgroundColor = [UIColor clearColor];
+    self.inputFriend.layer.cornerRadius = 10;
     
     self.inputEmail.backgroundColor = [UIColor clearColor];
     self.inputEmail.textColor = [UIColor blackColor];
-    self.inputEmail.font = [UIFont boldSystemFontOfSize:15.0f];
+    //self.inputEmail.font = [UIFont boldSystemFontOfSize:15.0f];
     self.inputEmail.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:@"Input Email to Add" attributes:@{NSForegroundColorAttributeName: [UIColor blackColor] }];
     self.inputEmail.borderStyle = UITextBorderStyleRoundedRect;
     self.inputEmail.layer.borderWidth = 0.5f;
@@ -47,6 +48,19 @@
     self.inputEmail.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.inputEmail.delegate = self;
     self.inputEmail.backgroundColor = [UIColor clearColor];
+    self.inputEmail.layer.cornerRadius = 10;
+    
+    self.AddUserButon.layer.cornerRadius = 10;
+    self.AddUserButon.layer.borderWidth = 2;
+    self.AddUserButon.layer.borderColor = [UIColor colorWithRed:34.0/255.0 green:192.0f/255.0 blue:100.0/255.0 alpha:1].CGColor;
+    self.AddUserButon.backgroundColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1];
+    [self.AddUserButon setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    self.AddEmailButton.layer.cornerRadius = 10;
+    self.AddEmailButton.layer.borderWidth = 2;
+    self.AddEmailButton.layer.borderColor = [UIColor colorWithRed:34.0/255.0 green:192.0f/255.0 blue:100.0/255.0 alpha:1].CGColor;
+    self.AddEmailButton.backgroundColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1];
+    [self.AddEmailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     self.client = [[ServerCalls alloc] init];
     self.client.delegate = self;
@@ -80,6 +94,7 @@
     if(success == 1)
     {
         [[User currentUser] updateFriendsList];
+         self.inputFriend.text = @"";
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
                                                         message:@"You have added a new friend"
                                                        delegate:self
@@ -145,6 +160,12 @@
         NSLog(@"friend needing to be added is %@", self.inputEmail.text);
          [[User currentUser] addEmailRecepient:self.inputEmail.text];
         self.inputEmail.text = @"";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
+                                                        message:@"You have added a new email"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
     
 }

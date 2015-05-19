@@ -41,6 +41,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *AddFriendButton;
 @property (strong, nonatomic) IBOutlet UIButton *StagingButton;
 @property (strong, nonatomic) RCImage *currentImage;
+@property UIActivityIndicatorView *spinner;
 
 - (IBAction)logOff:(id)sender;
 - (IBAction)reverseCamera:(id)sender;
@@ -50,6 +51,7 @@
 @property NSString *path;
 @property NSString *camera_side;
 @property ServerCalls *client;
+@property int activeCamera;
 
 - (void) initCapture;
 - (IBAction) captureNow:(id)sender;

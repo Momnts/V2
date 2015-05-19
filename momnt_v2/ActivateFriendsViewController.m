@@ -24,8 +24,8 @@
     //self.view.backgroundColor = [UIColor darkGrayColor];
     self.CameraButton.layer.cornerRadius = 10;
     self.CameraButton.layer.borderWidth = 2;
-    self.CameraButton.layer.borderColor = [UIColor greenColor].CGColor;
-    self.CameraButton.backgroundColor = [UIColor greenColor];
+    self.CameraButton.layer.borderColor = [UIColor colorWithRed:34.0/255.0 green:192.0f/255.0 blue:100.0/255.0 alpha:1].CGColor;
+    self.CameraButton.backgroundColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1];
     
     //self.ListFriendsView = [[SendFriendsTableController alloc] init];
     //CGFloat topLayoutGuide = self.topLayoutGuide.length;
@@ -42,6 +42,8 @@
     self.activeFriends = [[User currentUser] returnRecepients];
     self.activeEmails = [[User currentUser] returnEmailRecepients];
     NSLog(@"active emails is %lu", (unsigned long)[self.activeEmails count]);
+    self.activateFRButton.tintColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1];
+    self.activateFRButton.onTintColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1];
     
 }
 
@@ -166,7 +168,7 @@
     activeButton.frame = CGRectMake(300, 8, 40, 40);
     activeButton.layer.cornerRadius = 20;
     activeButton.layer.borderWidth = 2;
-    activeButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    activeButton.layer.borderColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1].CGColor;
     [activeButton setBackgroundColor:[UIColor clearColor]];
 
     

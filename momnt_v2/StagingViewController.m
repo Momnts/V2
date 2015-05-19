@@ -179,7 +179,8 @@
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.frame = CGRectMake([rctFrame CGRectValue].origin.x, [rctFrame CGRectValue].origin.y-30, 100, 20);
         //button.layer.borderColor = [UIColor greenColor].CGColor;
-        [button setBackgroundColor:[[UIColor greenColor] colorWithAlphaComponent:0.2f] ];
+        [button setBackgroundColor:[UIColor colorWithRed:34.0/255.0 green:192.0f/255.0 blue:100.0/255.0 alpha:1] ];
+        button.layer.cornerRadius = 10;
         
         [cell.mainView insertSubview:button aboveSubview:cell.mainView];
         //[cell.mainView addSubview:button];
@@ -188,7 +189,11 @@
     NSString *recipients =[[currentObject.recipients valueForKey:@"username"] componentsJoinedByString:@", "];
     cell.recipientsLabel.text = recipients;
     cell.recipientsLabel.textColor = [UIColor greenColor];
-    
+    cell.recipientsLabel.layer.cornerRadius = 10;
+    cell.recipientsLabel.layer.borderWidth = 2;
+    cell.recipientsLabel.layer.borderColor = [UIColor colorWithRed:34.0/255.0 green:192.0f/255.0 blue:100.0/255.0 alpha:1].CGColor;
+    cell.recipientsLabel.backgroundColor = [UIColor colorWithRed:34.0f/255.0 green:192.0f/255.0 blue:100/255.0 alpha:1];
+    [cell.recipientsLabel setTextColor:[UIColor whiteColor]];
     
     return cell;
 }

@@ -28,7 +28,7 @@
                                                        endAngle:DEGREES_TO_RADIANS(self.currentAngle)
                                                       clockwise:YES];
       //NSLog(@"Inside Active state angle is %f",self.currentAngle);
-    [[UIColor greenColor] setStroke];
+    [[UIColor colorWithRed:195.0/255.0 green:37.0/255.0 blue:28.0/255.0 alpha:1] setStroke];
     aPath.lineWidth = 4;
     [aPath stroke];
     }

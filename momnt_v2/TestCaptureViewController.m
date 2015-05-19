@@ -115,11 +115,16 @@
     [[User currentUser] initUser:self.userName initID:self.userId];
     [[User currentUser] activateFR];
     
-    
+    self.activeCamera = TRUE;
     //NSMutableDictionary *latAndLong = [[Locater sharedLocater] returnLatAndLong];
     //NSString *lat = [latAndLong objectForKey:@"lat"];
     //NSString *lng =[latAndLong objectForKey:@"lng"];
-
+    
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.spinner setCenter:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)]; // I do this because I'm in landscape mode
+    self.spinner.hidesWhenStopped = YES;
+    [self.view addSubview:self.spinner];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -393,6 +398,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     //UIImage *pic = [[UIImage alloc] initWithCGImage:self.capturedImage.CGImage scale:DISPLAY_SCALE orientation:UIImageOrientationRight];    // UIImageOrientationUp];
     
     //NSLog(@"UIImage after scaling is [width, height] is %f, %f", pic.size.width, pic.size.height);
+    if(self.activeCamera)
+    {
     dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         [UIView animateKeyframesWithDuration:0.3 delay:0.0 options:nil animations:^{
@@ -439,6 +446,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     
     else{
+        
+        self.activeCamera = false;
+        [self.spinner startAnimating];
+        //self.CaptureButton.layer.backgroundColor = [UIColor redColor].CGColor;
+        
     __block RCImage* detectedImage;
     
     dispatch_sync( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -480,6 +492,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     }
 
+    }
     //detectedImage.recognizedIDs = self.namesArray;
     
     //[[[User currentUser] returnStageQueue] addObject:detectedImage];
@@ -501,6 +514,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 {
     NSLog(@"saving Image");
     [[[User currentUser] returnStageQueue] addObject:self.currentImage];
+    self.activeCamera = TRUE;
+    [self.spinner stopAnimating];
+    //self.CaptureButton.layer.backgroundColor = [UIColor clearColor].CGColor;
 }
 
 

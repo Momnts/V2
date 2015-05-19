@@ -11,6 +11,8 @@
 #import "User.h"
 
 @interface AddFriendViewController : UIViewController <UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UIButton *AddUserButon;
+@property (strong, nonatomic) IBOutlet UIButton *AddEmailButton;
 
 @property (strong, nonatomic) IBOutlet UITextField *inputFriend;
 - (IBAction)addFriend:(id)sender;
