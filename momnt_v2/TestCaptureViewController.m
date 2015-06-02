@@ -473,7 +473,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     */
     
     NSLog(@"in recognize faces count is %lu", (unsigned long) detectedImage.faces.count);
-    
     if (detectedImage.faces == nil || [detectedImage.faces count] == 0)
     {
         NSLog(@"array is empty");
@@ -483,12 +482,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     else
     {
         self.currentImage = detectedImage;
-        self.currentImage.recognizedIDs = [[NSMutableArray alloc] init];
+        self.currentImage.recognizedIDs = [NSMutableArray arrayWithCapacity:[detectedImage.faces count]];
         
-        for (int i=0; i< detectedImage.faces.count; i++)
-        {
-            [self.client recognize_image:detectedImage.faces[i] file_name:@"test.jpg" index:i];
-        }
+        //for (int i=0; i< detectedImage.faces.count; i++)
+        //{
+            [self.client recognize_image:detectedImage.primaryImage file_name:@"test.jpg" index:detectedImage.faces.count];
+        //}
     }
     }
 
@@ -503,11 +502,27 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     //[self.RCImagesArray addObject:detectedImage];
 }
 
--(void)client:(ServerCalls *)serverCalls sendWithRecognizedNames:(NSString *)name index:(int)ind {
+-(void)client:(ServerCalls *)serverCalls sendWithRecognizedNames:(NSMutableArray *)name index:(int)ind {
+    /*
     NSLog(@"inside sendWithRecognizedNames index is %d", ind);
-    [self.currentImage.recognizedIDs insertObject:name atIndex:ind];
-    if(ind == (self.currentImage.recognizedIDs.count-1))
+    if(name == NULL)
+        //[self.currentImage.recognizedIDs insertObject:@"" atIndex:ind];
+        [self.currentImage.recognizedIDs addObject:@""];
+    else
+        [self.currentImage.recognizedIDs addObject:name];
+        //[self.currentImage.recognizedIDs insertObject:name atIndex:ind];
+    
+    if(ind != (self.currentImage.faces.count-1))
+    {
+        NSLog(@"onto the next person");
+        [self.client recognize_image:self.currentImage.faces[ind+1] file_name:@"test.jpg" index:ind+1];
+    }
+    else //(ind == (self.currentImage.recognizedIDs.count-1))
         [self saveRCImage];
+     */
+    NSArray* reversedNameArray = [[name reverseObjectEnumerator] allObjects];
+    self.currentImage.recognizedIDs = reversedNameArray;
+    [self saveRCImage];
 }
 
 -(void) saveRCImage

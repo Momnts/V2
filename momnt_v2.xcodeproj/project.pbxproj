@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4106655B1AE72AAB005E75E4 /* Locater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106655A1AE72AAB005E75E4 /* Locater.m */; };
 		4106655D1AE72AD2005E75E4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4106655C1AE72AD2005E75E4 /* CoreLocation.framework */; };
+		410AE1DC1B0C45AC006525A8 /* tonyCrisp.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 410AE1DB1B0C45AC006525A8 /* tonyCrisp.jpg */; };
 		410BACC61ADB4B99001996B4 /* rotate_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 410BACC51ADB4B99001996B4 /* rotate_camera.png */; };
 		410C5A5D1AE2FF5B0065F9B8 /* AllPicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410C5A5C1AE2FF5B0065F9B8 /* AllPicsViewController.m */; };
 		410C5A601AE318E00065F9B8 /* PicsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 410C5A5F1AE318E00065F9B8 /* PicsCollectionViewCell.m */; };
@@ -110,6 +111,7 @@
 		410665591AE72AAB005E75E4 /* Locater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Locater.h; sourceTree = "<group>"; };
 		4106655A1AE72AAB005E75E4 /* Locater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Locater.m; sourceTree = "<group>"; };
 		4106655C1AE72AD2005E75E4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		410AE1DB1B0C45AC006525A8 /* tonyCrisp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tonyCrisp.jpg; sourceTree = "<group>"; };
 		410BACC51ADB4B99001996B4 /* rotate_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rotate_camera.png; path = momnt_v2/rotate_camera.png; sourceTree = "<group>"; };
 		410C5A5B1AE2FF5B0065F9B8 /* AllPicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllPicsViewController.h; sourceTree = "<group>"; };
 		410C5A5C1AE2FF5B0065F9B8 /* AllPicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllPicsViewController.m; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				4106655C1AE72AD2005E75E4 /* CoreLocation.framework */,
 				410C5A611AE321F00065F9B8 /* picture65.png */,
 				418468991B074F4A008B5BE5 /* appbar.refresh.png */,
+				410AE1DB1B0C45AC006525A8 /* tonyCrisp.jpg */,
 				410C5A621AE321F00065F9B8 /* power86.png */,
 				4184689B1B08382E008B5BE5 /* logo_transparent.png */,
 				410BACC51ADB4B99001996B4 /* rotate_camera.png */,
@@ -576,6 +579,7 @@
 				412AAE6E1AD8606000FC9DC4 /* page3.png in Resources */,
 				412AAEB11AD9AD4D00FC9DC4 /* blindingLights.jpg in Resources */,
 				418468921B07498D008B5BE5 /* appbar.power.png in Resources */,
+				410AE1DC1B0C45AC006525A8 /* tonyCrisp.jpg in Resources */,
 				412AAEB31AD9BD8A00FC9DC4 /* suncity.jpg in Resources */,
 				412AAE6F1AD8606000FC9DC4 /* page4.png in Resources */,
 				412AAEB61AD9FDD100FC9DC4 /* Main.storyboard in Resources */,

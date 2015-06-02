@@ -91,7 +91,7 @@
          //NSLog(@"current Longitude: %@", _currentLongitude);
          //NSLog(@"current Latitude: %@", _currentLatitude);
         
-        [client updateLocation:currentUser withLat:_currentLatitude withLng:_currentLongitude];
+        //[client updateLocation:currentUser withLat:_currentLatitude withLng:_currentLongitude];
     }
     /*
     // Reverse Geocoding

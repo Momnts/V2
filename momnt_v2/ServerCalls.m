@@ -26,9 +26,15 @@ static NSString* const BaseURLString = @"https://obscure-caverns-1153.herokuapp.
                        maxResults:@"10"
                           success:^(NSDictionary *response) {
                               //NSLog(@"response is %@", response);
-                              NSString *person = [[[[response objectForKey:@"images"] objectAtIndex:0] objectForKey:@"transaction"] objectForKey:@"subject"] ;
-                              NSLog(@"person is %@", person);
-                              [delegate client:self sendWithRecognizedNames:person index:ind];
+                              NSMutableArray *res_dict = [response objectForKey:@"images"];
+                              NSMutableArray *people = [[NSMutableArray alloc] init];
+                              for (int i = 0; i < res_dict.count; i++)
+                              {
+                                NSString *person = [[[res_dict objectAtIndex:i] objectForKey:@"transaction"] objectForKey:@"subject"] ;
+                                NSLog(@"person is %@", person);
+                                  [people addObject:person];
+                              }
+                              [delegate client:self sendWithRecognizedNames:people index:ind];
                         } failure:^(NSDictionary *response) {
                               
                               NSLog(@"%@", response);
@@ -429,9 +435,9 @@ static NSString* const BaseURLString = @"https://obscure-caverns-1153.herokuapp.
     
     [manager POST:@"/user/updateLocation?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSLog(@"in updateLocation JSON: %@", responseObject);
+         //NSLog(@"in updateLocation JSON: %@", responseObject);
          NSDictionary *json = (NSDictionary *)responseObject;
-         NSLog(@"after json dictionary before arry");
+         //NSLog(@"after json dictionary before arry");
          //NSArray *data = [json objectForKey:@"latestDeals"];
          [delegate client:self sendUpdateLocationSuccess:json];//to:@"getLatestDeals"];
          

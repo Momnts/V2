@@ -16,7 +16,7 @@
 -(void) client:(ServerCalls *) serverCalls sendWithRecepientData:(NSDictionary*) responseObject;
 -(void) client:(ServerCalls *) serverCalls sendWithImInData:(NSDictionary*) responseObject;
 -(void) client:(ServerCalls *) serverCalls sendWithNames:(NSMutableArray*) names;
--(void) client:(ServerCalls *) serverCalls sendWithRecognizedNames:(NSString*) name index:(int)ind;
+-(void) client:(ServerCalls *) serverCalls sendWithRecognizedNames:(NSMutableArray*) name index:(int)ind;
 -(void) client:(ServerCalls *) serverCalls sendLoginSuccess:(NSDictionary*) responseObject;
 -(void) client:(ServerCalls *) serverCalls sendFriendSuccess:(NSDictionary*) responseObject;
 -(void) client:(ServerCalls *) serverCalls getFriendSuccess:(NSMutableArray *)responseObject;

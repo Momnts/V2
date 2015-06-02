@@ -98,8 +98,12 @@
         
         for (int j = 0; j<[image.recognizedIDs count]; j++)
         {
-            [dwellers addObject:[FriendIDMap objectForKey:image.recognizedIDs]];
-            NSLog(@"in picture %d, face recognized is %@", i,[FriendIDMap objectForKey:image.recognizedIDs] );
+            if(![image.recognizedIDs[j] isEqualToString:[[User currentUser] returnUserName]])
+                  {
+                      NSLog(@"in picture %d, face recognized is %@", i,[FriendIDMap objectForKey:image.recognizedIDs[j]] );
+                      [dwellers addObject:[FriendIDMap objectForKey:image.recognizedIDs[j]]];
+                  }
+            
         }
         
         if(dwellers.count == 0)

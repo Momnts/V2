@@ -43,7 +43,9 @@ bool info_sent;
     self.client.delegate = self;
     
     
-    [self.client train_image:[self.imagesArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.name];
+    //[self.client train_image:[self.imagesArray objectAtIndex:1] file_name:@"test.jpg" person_id:self.name];
+    
+    [self.client train_image:[UIImage imageNamed:@"tonyCrisp.jpg"] file_name:@"test.jpg" person_id:self.name];
     [self.client signup_pics:self.imagesArray withUserID:self.userID withUserName:self.name];
 
     //[self.client signup_pic:[self.imagesArray objectAtIndex:1] withUserID:self.userID];
